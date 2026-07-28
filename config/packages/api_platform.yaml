@@ -18,3 +18,4 @@ api_platform:
             vary: ['Content-Type', 'Authorization', 'Origin']
     exception_to_status:
         App\Commande\Service\PanierVideException: 400
+        App\Promotion\Service\PromoCodeInvalideException: 400

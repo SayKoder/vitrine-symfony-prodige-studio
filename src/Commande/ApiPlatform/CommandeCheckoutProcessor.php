@@ -26,6 +26,8 @@ class CommandeCheckoutProcessor implements ProcessorInterface
             throw new AccessDeniedException();
         }
 
-        return $this->commandeManager->checkout($user);
+        $codePromo = $data instanceof CommandeCheckoutInput ? $data->codePromo : null;
+
+        return $this->commandeManager->checkout($user, $codePromo);
     }
 }
