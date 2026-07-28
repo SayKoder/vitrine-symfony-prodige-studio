@@ -1259,3 +1259,53 @@ footer.pied-vitrine {
     letter-spacing: 0.15em;
     color: rgb(var(--gris-chaud));
 }
+
+.panier-suite {
+    margin-top: 2rem;
+    text-align: right;
+}
+
+.panier-suite .bouton {
+    display: inline-block;
+}
+
+/* Tunnel de commande */
+
+.panier-ligne--lecture-seule {
+    grid-template-columns: 1fr auto;
+}
+
+.tunnel-promo {
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: rgb(var(--or));
+}
+
+.tunnel-erreur {
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: rgb(200 90 80);
+}
+
+.tunnel-valider {
+    display: block;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.tunnel-valider:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
+.tunnel-confirmation {
+    text-align: center;
+    padding: 3rem 0;
+}
+
+.tunnel-confirmation-titre {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    color: rgb(var(--creme));
+    margin: 0.75rem 0 1rem;
+}

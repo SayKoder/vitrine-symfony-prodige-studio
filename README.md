@@ -38,12 +38,8 @@ docker compose exec php php bin/console --env=test doctrine:migrations:migrate -
 Puis, a chaque execution :
 
 ```
-docker compose exec -e APP_ENV=test php php bin/phpunit
+docker compose exec php php bin/phpunit
 ```
-
-Le `-e APP_ENV=test` est necessaire car le conteneur `php` a `APP_ENV=dev`
-comme variable d'environnement reelle (voir `compose.yaml`), qui a la
-priorite sur la valeur forcee par `phpunit.dist.xml`.
 
 ## Organisation du projet
 

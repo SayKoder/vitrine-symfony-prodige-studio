@@ -3,7 +3,7 @@ import { Controller } from '@hotwired/stimulus';
 const CLE_CODE_PROMO = 'vitrineps_code_promo';
 
 export default class extends Controller {
-    static targets = ['lignes', 'vide', 'total', 'promoCode', 'promoResultat'];
+    static targets = ['lignes', 'vide', 'total', 'promoCode', 'promoResultat', 'validerLien'];
 
     connect() {
         this.charger();
@@ -26,6 +26,7 @@ export default class extends Controller {
 
         this.lignesTarget.innerHTML = '';
         this.videTarget.hidden = lignes.length > 0;
+        this.validerLienTarget.hidden = lignes.length === 0;
 
         let total = 0;
 

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmation de commande</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #0a0908; font-family: Georgia, 'Times New Roman', serif;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color: #0a0908; padding: 2.5rem 1rem;">
+        <tr>
+            <td align="center">
+                <table role="presentation" width="100%" style="max-width: 32rem; background-color: #15130f; border: 1px solid rgba(199, 160, 82, 0.25); border-radius: 4px;" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td style="padding: 2rem 2rem 1rem; text-align: center;">
+                            <p style="color: #c7a052; letter-spacing: 0.3em; font-size: 0.75rem; text-transform: uppercase; margin: 0;">Prodige Studio</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0 2rem 1.5rem; text-align: center;">
+                            <h1 style="color: #f2ece1; font-size: 1.4rem; font-weight: 400; margin: 0;">Merci pour votre commande, {{ commande.user.prenom }}</h1>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0 2rem 1rem;">
+                            <p style="color: #948c7a; font-size: 0.85rem; margin: 0 0 1.5rem;">
+                                Commande n&deg;{{ commande.id }} du {{ commande.createdAt|date('d/m/Y à H:i') }}
+                            </p>
+
+                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-top: 1px solid rgba(199, 160, 82, 0.2);">
+                                {% for ligne in commande.lignesCommande %}
+                                    <tr>
+                                        <td style="padding: 0.75rem 0; color: #f2ece1; font-size: 0.9rem; border-bottom: 1px solid rgba(199, 160, 82, 0.1);">
+                                            {{ ligne.prestation.nom }} &times; {{ ligne.quantite }}
+                                        </td>
+                                        <td align="right" style="padding: 0.75rem 0; color: #f2ece1; font-size: 0.9rem; border-bottom: 1px solid rgba(199, 160, 82, 0.1);">
+                                            {{ (ligne.prixUnitaire * ligne.quantite)|number_format(2) }}&euro;
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+
+                            {% if commande.promoCode %}
+                                <p style="color: #c7a052; font-size: 0.85rem; margin: 1rem 0 0;">
+                                    Code promo applique : {{ commande.promoCode.code }}
+                                </p>
+                            {% endif %}
+
+                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top: 1rem;">
+                                <tr>
+                                    <td style="color: #f2ece1; font-size: 1.1rem; font-weight: 700;">Total</td>
+                                    <td align="right" style="color: #c7a052; font-size: 1.1rem; font-weight: 700;">{{ commande.total }}&euro;</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1.5rem 2rem 2rem; border-top: 1px solid rgba(199, 160, 82, 0.15);">
+                            <p style="color: #6a6458; font-size: 0.8rem; margin: 0;">
+                                Nous revenons vers vous tres prochainement pour organiser votre seance.
+                                Pour toute question, repondez simplement a cet e-mail ou appelez le 06 40 27 77 16.
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
