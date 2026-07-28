@@ -1,0 +1,37 @@
+{% import 'public/_logo.html.twig' as logo %}
+
+<nav class="nav" data-controller="nav" data-nav-reduite-class="nav--reduite">
+    <a href="{{ path('app_home') }}" aria-label="Prodige Studio" style="color: rgb(var(--creme));">
+        {{ logo.logo('nav-logo') }}
+    </a>
+
+    <div class="nav-liens">
+        <a href="{{ path('app_home') }}" class="{{ app.current_route == 'app_home' ? 'actif' }}">ACCUEIL</a>
+        <a href="{{ path('app_galerie') }}" class="{{ app.current_route == 'app_galerie' ? 'actif' }}">GALERIE</a>
+        <a href="{{ path('app_prestations') }}" class="{{ app.current_route == 'app_prestations' ? 'actif' }}">SERVICES</a>
+        <a href="{{ path('app_a_propos') }}" class="{{ app.current_route == 'app_a_propos' ? 'actif' }}">À PROPOS</a>
+        <a href="{{ path('app_contact') }}" class="{{ app.current_route == 'app_contact' ? 'actif' }}">CONTACT</a>
+    </div>
+
+    <div class="nav-controles">
+        <button type="button" class="nav-bascule-theme" data-controller="theme" data-action="theme#basculer" aria-label="Changer de theme" title="Diaphragme">
+            {{ logo.signature() }}
+        </button>
+
+        <button type="button" class="nav-menu-bouton" data-action="nav#basculerMenu" aria-label="Menu" aria-expanded="false">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                <line x1="3" y1="6" x2="19" y2="6" stroke="currentColor" stroke-width="1.5" />
+                <line x1="3" y1="11" x2="19" y2="11" stroke="currentColor" stroke-width="1.5" />
+                <line x1="3" y1="16" x2="19" y2="16" stroke="currentColor" stroke-width="1.5" />
+            </svg>
+        </button>
+    </div>
+
+    <div class="nav-menu-mobile" data-nav-target="menuMobile">
+        <a href="{{ path('app_home') }}" data-action="nav#fermerMenu" class="{{ app.current_route == 'app_home' ? 'actif' }}">ACCUEIL</a>
+        <a href="{{ path('app_galerie') }}" data-action="nav#fermerMenu" class="{{ app.current_route == 'app_galerie' ? 'actif' }}">GALERIE</a>
+        <a href="{{ path('app_prestations') }}" data-action="nav#fermerMenu" class="{{ app.current_route == 'app_prestations' ? 'actif' }}">SERVICES</a>
+        <a href="{{ path('app_a_propos') }}" data-action="nav#fermerMenu" class="{{ app.current_route == 'app_a_propos' ? 'actif' }}">À PROPOS</a>
+        <a href="{{ path('app_contact') }}" data-action="nav#fermerMenu" class="{{ app.current_route == 'app_contact' ? 'actif' }}">CONTACT</a>
+    </div>
+</nav>

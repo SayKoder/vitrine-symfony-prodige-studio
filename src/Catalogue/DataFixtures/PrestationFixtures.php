@@ -32,6 +32,7 @@ class PrestationFixtures extends Fixture
             '350.00',
         );
         $entreprise->setDureeMinutes(120);
+        $entreprise->setMisEnAvant(true);
         $manager->persist($entreprise);
 
         $manager->flush();

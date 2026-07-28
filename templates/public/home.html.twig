@@ -1,0 +1,149 @@
+{% extends 'public/base.html.twig' %}
+
+{% block title %}Prodige Studio - Photographe professionnel a Reims{% endblock %}
+
+{% block meta_description %}
+    <meta name="description" content="Prodige Studio, photographe professionnel a Reims : portraits, mariages, corporate et evenements. Decouvrez les prestations, la galerie et prenez contact.">
+{% endblock %}
+
+{% block meta_og %}
+    {{ parent() }}
+    <meta property="og:title" content="Prodige Studio - Photographe professionnel a Reims">
+    <meta property="og:description" content="Photographie haut de gamme pour les professionnels, portraits, mariages et evenements qui comptent.">
+    <meta property="og:type" content="website">
+{% endblock %}
+
+{% block contenu %}
+    <section id="hero" class="hero">
+        <div class="hero-conteneur">
+            <div class="hero-texte">
+                <p class="label-or">Reims &middot; France &middot; Europe</p>
+
+                <h1 class="hero-titre">
+                    L'image au
+                    <br>
+                    <span class="accent">service</span>
+                    <br>
+                    de votre recit
+                </h1>
+
+                <p class="hero-sous-titre">
+                    Photographie haut de gamme pour les professionnels, portraits, mariages et evenements qui comptent.
+                </p>
+
+                <div class="hero-actions">
+                    <a href="{{ path('app_prestations') }}" class="bouton bouton--plein">VOIR LE CATALOGUE</a>
+                    <a href="{{ path('app_contact') }}" class="bouton bouton--contour">PRENDRE CONTACT</a>
+                </div>
+
+                <div class="hero-scroll">
+                    <div class="hero-scroll-trait"></div>
+                    <span class="hero-scroll-texte">SCROLL</span>
+                </div>
+            </div>
+
+            <div class="hero-visuels">
+                <div class="cadre-coin cadre-coin--visible hero-photo hero-photo-principale">
+                    <div class="hero-photo-placeholder">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                            <circle cx="12" cy="13" r="4" />
+                        </svg>
+                        <span>PHOTO</span>
+                    </div>
+                </div>
+
+                <div class="hero-photo-secondaires">
+                    <div class="cadre-coin hero-photo hero-photo-petite">
+                        <div class="hero-photo-placeholder">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" />
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                            </svg>
+                            <span>PORTRAIT</span>
+                        </div>
+                    </div>
+
+                    <div class="cadre-coin hero-photo hero-photo-petite" style="height: 8rem;">
+                        <div class="hero-photo-placeholder">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                            </svg>
+                            <span>MARIAGE</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="marquee">
+        <div class="marquee-piste">
+            <span>PORTRAIT</span>
+            <span>&middot;</span>
+            <span>MARIAGE</span>
+            <span>&middot;</span>
+            <span>CORPORATE</span>
+            <span>&middot;</span>
+            <span>&Eacute;V&Eacute;NEMENT</span>
+            <span>&middot;</span>
+            <span>NATURE</span>
+            <span>&middot;</span>
+            <span>PORTRAIT</span>
+            <span>&middot;</span>
+            <span>MARIAGE</span>
+            <span>&middot;</span>
+            <span>CORPORATE</span>
+            <span>&middot;</span>
+            <span>&Eacute;V&Eacute;NEMENT</span>
+            <span>&middot;</span>
+            <span>NATURE</span>
+            <span>&middot;</span>
+        </div>
+    </div>
+
+    <section class="section conteneur">
+        <div class="section-entete">
+            <p class="label-or">Explorer</p>
+            <h2 class="section-titre">Par ou <span class="accent">commencer</span></h2>
+        </div>
+
+        <div class="destinations">
+            <a href="{{ path('app_prestations') }}" class="cadre-coin destination-carte destination-carte--large">
+                <span class="destination-numero">01</span>
+                <div>
+                    <p class="destination-titre">Prestations &amp; tarifs</p>
+                    <p class="destination-texte">Portraits, mariages, corporate : consultez les forfaits et leurs tarifs en detail.</p>
+                </div>
+                <span class="destination-fleche">Voir le catalogue &rarr;</span>
+            </a>
+
+            <a href="{{ path('app_galerie') }}" class="cadre-coin destination-carte">
+                <span class="destination-numero">02</span>
+                <div>
+                    <p class="destination-titre">Galerie</p>
+                    <p class="destination-texte">Un apercu du style et des ambiances travaillees en seance, classe par type de prestation.</p>
+                </div>
+                <span class="destination-fleche">Regarder &rarr;</span>
+            </a>
+
+            <a href="{{ path('app_a_propos') }}" class="cadre-coin destination-carte">
+                <span class="destination-numero">03</span>
+                <div>
+                    <p class="destination-titre">A propos</p>
+                    <p class="destination-texte">La demarche et la philosophie derriere chaque prise de vue.</p>
+                </div>
+                <span class="destination-fleche">Decouvrir &rarr;</span>
+            </a>
+
+            <a href="{{ path('app_contact') }}" class="cadre-coin destination-carte">
+                <span class="destination-numero">04</span>
+                <div>
+                    <p class="destination-titre">Contact</p>
+                    <p class="destination-texte">Un projet en tete ? Discutons-en ensemble.</p>
+                </div>
+                <span class="destination-fleche">Ecrire &rarr;</span>
+            </a>
+        </div>
+    </section>
+{% endblock %}

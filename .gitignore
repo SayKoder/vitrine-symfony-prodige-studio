@@ -25,3 +25,8 @@
 .claude
 rapport.md
 ###< local ###
+
+###> uploads ###
+/public/uploads/*/*
+!/public/uploads/*/.gitkeep
+###< uploads ###
