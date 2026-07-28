@@ -18,7 +18,7 @@ docker compose exec php php bin/console doctrine:database:create
 
 Le site est ensuite accessible sur http://localhost:8080.
 
-Deux comptes de test sont crees par les fixtures :
+Des comptes et des prestations de demonstration sont crees par les fixtures :
 
 ```
 docker compose exec php php bin/console doctrine:fixtures:load --no-interaction
@@ -26,6 +26,7 @@ docker compose exec php php bin/console doctrine:fixtures:load --no-interaction
 
 - admin@vitrineps.test / admin1234 (ROLE_ADMIN, acces a /admin)
 - client@vitrineps.test / client1234 (ROLE_CLIENT, acces a /compte)
+- 3 prestations de demonstration, gerables depuis /admin/prestations
 
 ## Tests
 
