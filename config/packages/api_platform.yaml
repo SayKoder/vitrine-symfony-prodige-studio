@@ -1,6 +1,17 @@
 api_platform:
-    title: Hello API Platform
+    title: VitrinePS API
+    description: API interne de VitrinePS pour le catalogue, le panier, les commandes et les promotions.
     version: 1.0.0
+    mapping:
+        paths:
+            - '%kernel.project_dir%/src/Catalogue/Entity'
+            - '%kernel.project_dir%/src/Commande/Entity'
+            - '%kernel.project_dir%/src/Promotion/Entity'
+            - '%kernel.project_dir%/src/Paiement/Entity'
+            - '%kernel.project_dir%/src/User/Entity'
+    formats:
+        jsonld: ['application/ld+json']
+        json: ['application/json']
     defaults:
         stateless: true
         cache_headers:

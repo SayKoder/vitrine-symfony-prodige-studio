@@ -2,40 +2,64 @@
 
 namespace App\Catalogue\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\RangeFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Catalogue\Repository\PrestationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
+#[ApiResource(
+    operations: [
+        new GetCollection(),
+        new Get(),
+    ],
+    normalizationContext: ['groups' => ['prestation:read']],
+    paginationItemsPerPage: 10,
+)]
+#[ApiFilter(SearchFilter::class, properties: ['nom' => 'partial'])]
+#[ApiFilter(RangeFilter::class, properties: ['prix'])]
 #[ORM\Entity(repositoryClass: PrestationRepository::class)]
 class Prestation
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['prestation:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 150)]
     #[Assert\NotBlank]
     #[Assert\Length(max: 150)]
+    #[Groups(['prestation:read'])]
     private string $nom;
 
     #[ORM\Column(type: 'text')]
     #[Assert\NotBlank]
+    #[Groups(['prestation:read'])]
     private string $description;
 
     #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
     #[Assert\NotBlank]
     #[Assert\Positive]
+    #[Groups(['prestation:read'])]
     private string $prix;
 
     #[ORM\Column(nullable: true)]
     #[Assert\Positive]
+    #[Groups(['prestation:read'])]
     private ?int $dureeMinutes = null;
 
     #[ORM\Column]
+    #[Groups(['prestation:read'])]
     private bool $actif = true;
 
     #[ORM\Column]
+    #[Groups(['prestation:read'])]
     private \DateTimeImmutable $createdAt;
 
     public function __construct(string $nom, string $description, string $prix)
