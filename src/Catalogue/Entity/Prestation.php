@@ -4,6 +4,7 @@ namespace App\Catalogue\Entity;
 
 use App\Catalogue\Repository\PrestationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PrestationRepository::class)]
 class Prestation
@@ -14,15 +15,21 @@ class Prestation
     private ?int $id = null;
 
     #[ORM\Column(length: 150)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 150)]
     private string $nom;
 
     #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank]
     private string $description;
 
     #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
+    #[Assert\NotBlank]
+    #[Assert\Positive]
     private string $prix;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\Positive]
     private ?int $dureeMinutes = null;
 
     #[ORM\Column]
