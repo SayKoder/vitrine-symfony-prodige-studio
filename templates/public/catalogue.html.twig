@@ -63,6 +63,16 @@
                         <ul class="carte-forfait-liste">
                             <li>{{ prestation.description }}</li>
                         </ul>
+
+                        <div class="carte-forfait-action">
+                            {% if app.user %}
+                                <div data-controller="ajouter-panier" data-ajouter-panier-prestation-value="/api/prestations/{{ prestation.id }}">
+                                    <button type="button" class="bouton bouton--plein" data-ajouter-panier-target="bouton" data-action="ajouter-panier#ajouter">AJOUTER AU PANIER</button>
+                                </div>
+                            {% else %}
+                                <a href="{{ path('app_login') }}" class="bouton bouton--contour">SE CONNECTER POUR RESERVER</a>
+                            {% endif %}
+                        </div>
                     </div>
                 {% endfor %}
             </div>

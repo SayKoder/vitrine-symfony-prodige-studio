@@ -33,6 +33,20 @@
     {% include 'public/_nav.html.twig' %}
 
     <main>
+        {% set flashesSucces = app.flashes('success') %}
+        {% set flashesErreur = app.flashes('error') %}
+
+        {% if flashesSucces|length or flashesErreur|length %}
+            <div class="conteneur flash-conteneur">
+                {% for message in flashesSucces %}
+                    <div class="flash-message flash-message--succes">{{ message }}</div>
+                {% endfor %}
+                {% for message in flashesErreur %}
+                    <div class="flash-message flash-message--erreur">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
         {% block contenu %}{% endblock %}
     </main>
 

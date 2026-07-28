@@ -11,6 +11,9 @@
         <a href="{{ path('app_prestations') }}" class="{{ app.current_route == 'app_prestations' ? 'actif' }}">SERVICES</a>
         <a href="{{ path('app_a_propos') }}" class="{{ app.current_route == 'app_a_propos' ? 'actif' }}">À PROPOS</a>
         <a href="{{ path('app_contact') }}" class="{{ app.current_route == 'app_contact' ? 'actif' }}">CONTACT</a>
+        {% if app.user %}
+            <a href="{{ path('app_panier') }}" class="{{ app.current_route == 'app_panier' ? 'actif' }}">PANIER</a>
+        {% endif %}
     </div>
 
     <div class="nav-controles">
@@ -33,5 +36,8 @@
         <a href="{{ path('app_prestations') }}" data-action="nav#fermerMenu" class="{{ app.current_route == 'app_prestations' ? 'actif' }}">SERVICES</a>
         <a href="{{ path('app_a_propos') }}" data-action="nav#fermerMenu" class="{{ app.current_route == 'app_a_propos' ? 'actif' }}">À PROPOS</a>
         <a href="{{ path('app_contact') }}" data-action="nav#fermerMenu" class="{{ app.current_route == 'app_contact' ? 'actif' }}">CONTACT</a>
+        {% if app.user %}
+            <a href="{{ path('app_panier') }}" data-action="nav#fermerMenu" class="{{ app.current_route == 'app_panier' ? 'actif' }}">PANIER</a>
+        {% endif %}
     </div>
 </nav>

@@ -15,6 +15,7 @@ class CommandeManager
         private readonly EntityManagerInterface $entityManager,
         private readonly PanierManager $panierManager,
         private readonly PromoCodeManager $promoCodeManager,
+        private readonly CommandeConfirmationMailer $commandeConfirmationMailer,
     ) {
     }
 
@@ -60,6 +61,8 @@ class CommandeManager
         $this->entityManager->persist($commande);
         $this->panierManager->clear($panier);
         $this->entityManager->flush();
+
+        $this->commandeConfirmationMailer->envoyerConfirmation($commande);
 
         return $commande;
     }

@@ -6,10 +6,13 @@ use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use App\Catalogue\Entity\Prestation;
 use App\User\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Test\MailerAssertionsTrait;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class PanierCommandeApiTest extends ApiTestCase
 {
+    use MailerAssertionsTrait;
+
     protected static ?bool $alwaysBootKernel = true;
 
     private function createUser(array $roles): User
@@ -90,6 +93,32 @@ class PanierCommandeApiTest extends ApiTestCase
 
         $panier = $client->request('GET', '/api/paniers/mine', ['headers' => ['Accept' => 'application/json']])->toArray();
         self::assertSame([], $panier['lignesPanier']);
+    }
+
+    public function testCheckoutSendsConfirmationEmailToUser(): void
+    {
+        $client = self::createClient();
+        $user = $this->createUser(['ROLE_CLIENT']);
+        $client->loginUser($user);
+        $prestation = $this->createPrestation('80.00');
+
+        $client->request('POST', '/api/ligne_paniers', [
+            'headers' => ['Content-Type' => 'application/json'],
+            'json' => ['prestation' => '/api/prestations/'.$prestation->getId(), 'quantite' => 1],
+        ]);
+
+        $client->request('POST', '/api/commandes', [
+            'headers' => ['Content-Type' => 'application/json'],
+            'json' => [],
+        ]);
+
+        self::assertResponseStatusCodeSame(201);
+        self::assertEmailCount(1);
+
+        $email = self::getMailerMessage(0);
+        self::assertEmailHeaderSame($email, 'To', $user->getEmail());
+        self::assertEmailHeaderSame($email, 'Subject', 'Confirmation de votre commande Prodige Studio');
+        self::assertEmailHtmlBodyContains($email, '80.00');
     }
 
     public function testCheckoutWithEmptyPanierReturns400(): void
