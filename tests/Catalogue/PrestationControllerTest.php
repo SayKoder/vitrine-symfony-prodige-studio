@@ -8,10 +8,21 @@ use App\Commande\Entity\LigneCommande;
 use App\User\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class PrestationControllerTest extends WebTestCase
 {
+    private const string PNG_UN_PIXEL_BASE64 = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=';
+
+    private function creerFichierImageTemporaire(): string
+    {
+        $chemin = sys_get_temp_dir().'/'.uniqid('image-test-', true).'.png';
+        file_put_contents($chemin, base64_decode(self::PNG_UN_PIXEL_BASE64));
+
+        return $chemin;
+    }
+
     private function createAdmin(): User
     {
         $container = static::getContainer();
@@ -117,5 +128,53 @@ class PrestationControllerTest extends WebTestCase
         $client->followRedirect();
         self::assertSelectorTextContains('.alert-error', 'ne peut pas etre supprimee');
         self::assertNotNull($entityManager->getRepository(Prestation::class)->find($id));
+    }
+
+    public function testEditPrestationWithImageUploadReplacesThePreviousFile(): void
+    {
+        $client = static::createClient();
+        $client->loginUser($this->createAdmin());
+
+        $entityManager = static::getContainer()->get(EntityManagerInterface::class);
+        $prestation = $this->createPrestation($entityManager);
+        $dossierUploads = static::getContainer()->getParameter('kernel.project_dir').'/public/uploads/prestations';
+        $filesystem = new Filesystem();
+
+        $crawler = $client->request('GET', '/admin/prestations/'.$prestation->getId().'/edit');
+        $form = $crawler->selectButton('Enregistrer')->form([
+            'prestation[nom]' => 'Seance avec photo',
+            'prestation[description]' => 'Description test',
+            'prestation[prix]' => '120.00',
+        ]);
+        $form['prestation[imageFichier]']->upload($this->creerFichierImageTemporaire());
+        $client->submit($form);
+
+        self::assertResponseRedirects('/admin/prestations');
+
+        $entityManager->clear();
+        $prestation = $entityManager->getRepository(Prestation::class)->find($prestation->getId());
+        $premiereImage = $prestation->getImage();
+
+        self::assertNotNull($premiereImage);
+        self::assertFileExists($dossierUploads.'/'.$premiereImage);
+
+        $crawler = $client->request('GET', '/admin/prestations/'.$prestation->getId().'/edit');
+        $form = $crawler->selectButton('Enregistrer')->form([
+            'prestation[nom]' => 'Seance avec photo',
+            'prestation[description]' => 'Description test',
+            'prestation[prix]' => '120.00',
+        ]);
+        $form['prestation[imageFichier]']->upload($this->creerFichierImageTemporaire());
+        $client->submit($form);
+
+        $entityManager->clear();
+        $prestation = $entityManager->getRepository(Prestation::class)->find($prestation->getId());
+        $secondeImage = $prestation->getImage();
+
+        self::assertNotSame($premiereImage, $secondeImage);
+        self::assertFileDoesNotExist($dossierUploads.'/'.$premiereImage);
+        self::assertFileExists($dossierUploads.'/'.$secondeImage);
+
+        $filesystem->remove($dossierUploads.'/'.$secondeImage);
     }
 }

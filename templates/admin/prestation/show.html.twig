@@ -5,10 +5,15 @@
 {% block body %}
     <h1>{{ prestation.nom }}</h1>
 
+    {% if prestation.image %}
+        <img src="/uploads/prestations/{{ prestation.image }}" alt="{{ prestation.nom }}" width="300">
+    {% endif %}
+
     <p>{{ prestation.description }}</p>
     <p>Prix : {{ prestation.prix }} EUR</p>
     <p>Duree : {{ prestation.dureeMinutes ?: 'non renseignee' }}</p>
     <p>Visible dans le catalogue : {{ prestation.actif ? 'oui' : 'non' }}</p>
+    <p>Mise en avant sur la vitrine : {{ prestation.misEnAvant ? 'oui' : 'non' }}</p>
 
     <a href="{{ path('admin_prestation_edit', {id: prestation.id}) }}">Modifier</a>
     <a href="{{ path('admin_prestation_index') }}">Retour a la liste</a>

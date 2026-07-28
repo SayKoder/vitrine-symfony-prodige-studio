@@ -1,0 +1,95 @@
+{% extends 'public/base.html.twig' %}
+
+{% block title %}Nos prestations - Prodige Studio{% endblock %}
+
+{% block meta_description %}
+    <meta name="description" content="Decouvrez tous les forfaits photo de Prodige Studio : portraits, mariages, corporate et evenements, avec filtres par nom et par prix.">
+{% endblock %}
+
+{% block meta_og %}
+    {{ parent() }}
+    <meta property="og:title" content="Nos prestations - Prodige Studio">
+    <meta property="og:description" content="Le catalogue complet des forfaits photo de Prodige Studio.">
+    <meta property="og:type" content="website">
+{% endblock %}
+
+{% block contenu %}
+    <section class="section conteneur" style="padding-top: 7rem;">
+        <div class="section-entete">
+            <p class="label-or">Catalogue complet</p>
+            <h1 class="section-titre">Toutes nos <span class="accent">prestations</span></h1>
+        </div>
+
+        {{ form_start(form, {attr: {class: 'filtre-form'}}) }}
+            <div class="filtre-champ">
+                {{ form_label(form.nom) }}
+                {{ form_widget(form.nom) }}
+            </div>
+            <div class="filtre-champ">
+                {{ form_label(form.prixMin) }}
+                {{ form_widget(form.prixMin) }}
+            </div>
+            <div class="filtre-champ">
+                {{ form_label(form.prixMax) }}
+                {{ form_widget(form.prixMax) }}
+            </div>
+            <button type="submit" class="bouton bouton--plein">FILTRER</button>
+        {{ form_end(form) }}
+
+        {% if resultat.prestations|length %}
+            <div class="forfaits-grille forfaits-grille--trois">
+                {% for prestation in resultat.prestations %}
+                    <div class="cadre-coin carte-forfait {{ prestation.misEnAvant ? 'carte-forfait--populaire' }}">
+                        {% if prestation.misEnAvant %}
+                            <div class="badge-populaire">POPULAIRE</div>
+                        {% endif %}
+
+                        {% if prestation.image %}
+                            <div class="carte-forfait-image">
+                                <img src="/uploads/prestations/{{ prestation.image }}" alt="{{ prestation.nom }}">
+                            </div>
+                        {% endif %}
+
+                        <div class="carte-forfait-entete">
+                            <div>
+                                <p class="carte-forfait-nom">{{ prestation.nom|upper }}</p>
+                                {% if prestation.dureeMinutes %}
+                                    <p class="carte-forfait-sous-titre">{{ prestation.dureeMinutes }} min</p>
+                                {% endif %}
+                            </div>
+                            <p class="carte-forfait-prix">{{ prestation.prix }}&euro;</p>
+                        </div>
+
+                        <ul class="carte-forfait-liste">
+                            <li>{{ prestation.description }}</li>
+                        </ul>
+                    </div>
+                {% endfor %}
+            </div>
+
+            {% if resultat.nombreDePages > 1 %}
+                <nav class="pagination">
+                    {% set parametres = app.request.query.all %}
+
+                    {% if resultat.page > 1 %}
+                        <a href="{{ path('app_prestations', parametres|merge({page: resultat.page - 1})) }}">&laquo;</a>
+                    {% endif %}
+
+                    {% for numero in 1..resultat.nombreDePages %}
+                        {% if numero == resultat.page %}
+                            <span class="actuelle">{{ numero }}</span>
+                        {% else %}
+                            <a href="{{ path('app_prestations', parametres|merge({page: numero})) }}">{{ numero }}</a>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if resultat.page < resultat.nombreDePages %}
+                        <a href="{{ path('app_prestations', parametres|merge({page: resultat.page + 1})) }}">&raquo;</a>
+                    {% endif %}
+                </nav>
+            {% endif %}
+        {% else %}
+            <p class="section-note">Aucune prestation ne correspond a cette recherche.</p>
+        {% endif %}
+    </section>
+{% endblock %}

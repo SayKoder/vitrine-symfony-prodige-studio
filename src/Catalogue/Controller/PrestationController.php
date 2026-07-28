@@ -33,7 +33,7 @@ class PrestationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $prestationManager->save($prestation);
+            $prestationManager->save($prestation, $form->get('imageFichier')->getData());
             $this->addFlash('success', 'Prestation creee.');
 
             return $this->redirectToRoute('admin_prestation_index');
@@ -59,7 +59,7 @@ class PrestationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $prestationManager->save($prestation);
+            $prestationManager->save($prestation, $form->get('imageFichier')->getData());
             $this->addFlash('success', 'Prestation modifiee.');
 
             return $this->redirectToRoute('admin_prestation_index');

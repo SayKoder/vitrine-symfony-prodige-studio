@@ -4,5 +4,16 @@
     {{ form_row(form.prix) }}
     {{ form_row(form.dureeMinutes) }}
     {{ form_row(form.actif) }}
+    {{ form_row(form.misEnAvant) }}
+
+    {% if prestation is defined and prestation.image %}
+        <p>
+            Photo actuelle :
+            <br>
+            <img src="/uploads/prestations/{{ prestation.image }}" alt="{{ prestation.nom }}" width="200">
+        </p>
+    {% endif %}
+
+    {{ form_row(form.imageFichier) }}
     <button type="submit">Enregistrer</button>
 {{ form_end(form) }}

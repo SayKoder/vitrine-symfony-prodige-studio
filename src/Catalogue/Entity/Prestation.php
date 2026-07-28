@@ -60,6 +60,14 @@ class Prestation
 
     #[ORM\Column]
     #[Groups(['prestation:read'])]
+    private bool $misEnAvant = false;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['prestation:read'])]
+    private ?string $image = null;
+
+    #[ORM\Column]
+    #[Groups(['prestation:read'])]
     private \DateTimeImmutable $createdAt;
 
     public function __construct(string $nom, string $description, string $prix)
@@ -131,6 +139,30 @@ class Prestation
     public function setActif(bool $actif): static
     {
         $this->actif = $actif;
+
+        return $this;
+    }
+
+    public function isMisEnAvant(): bool
+    {
+        return $this->misEnAvant;
+    }
+
+    public function setMisEnAvant(bool $misEnAvant): static
+    {
+        $this->misEnAvant = $misEnAvant;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
 
         return $this;
     }
