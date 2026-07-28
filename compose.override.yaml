@@ -1,0 +1,13 @@
+
+services:
+  php:
+    volumes:
+      - ./:/var/www/html:cached
+      - php_vendor:/var/www/html/vendor
+      - php_var:/var/www/html/var
+
+###> doctrine/doctrine-bundle ###
+  database:
+    ports:
+      - "5432"
+###< doctrine/doctrine-bundle ###
