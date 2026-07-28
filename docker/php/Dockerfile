@@ -5,7 +5,7 @@ RUN apk add --no-cache \
         postgresql-dev \
         libzip-dev \
         $PHPIZE_DEPS \
-    && docker-php-ext-install intl pdo_pgsql zip opcache \
+    && docker-php-ext-install intl pdo_pgsql zip opcache bcmath \
     && apk del $PHPIZE_DEPS
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
