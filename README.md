@@ -45,6 +45,22 @@ Puis, a chaque execution :
 docker compose exec php php bin/phpunit
 ```
 
+## Analyse statique
+
+```
+docker compose exec php php bin/console cache:warmup --env=dev
+docker compose exec php php vendor/bin/phpstan analyse
+```
+
+## Integration continue
+
+Un pipeline GitHub Actions (`.github/workflows/ci.yml`) s'execute a chaque push
+et pull request sur `MAIN`/`develop` : installation des dependances, tests
+PHPUnit contre une vraie base PostgreSQL, analyse statique PHPStan, et build de
+l'image Docker. Un job de deploiement separe existe dans le pipeline
+(declenche sur un merge vers `MAIN` ou un tag) mais n'est pas encore branche
+sur un serveur reel.
+
 ## Organisation du projet
 
 Le code applicatif est un monolithe modulaire sous `src/`, un dossier par

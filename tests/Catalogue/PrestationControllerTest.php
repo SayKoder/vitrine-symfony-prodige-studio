@@ -146,7 +146,9 @@ class PrestationControllerTest extends WebTestCase
             'prestation[description]' => 'Description test',
             'prestation[prix]' => '120.00',
         ]);
-        $form['prestation[imageFichier]']->upload($this->creerFichierImageTemporaire());
+        /** @var \Symfony\Component\DomCrawler\Field\FileFormField $champImage */
+        $champImage = $form['prestation[imageFichier]'];
+        $champImage->upload($this->creerFichierImageTemporaire());
         $client->submit($form);
 
         self::assertResponseRedirects('/admin/prestations');
@@ -164,7 +166,9 @@ class PrestationControllerTest extends WebTestCase
             'prestation[description]' => 'Description test',
             'prestation[prix]' => '120.00',
         ]);
-        $form['prestation[imageFichier]']->upload($this->creerFichierImageTemporaire());
+        /** @var \Symfony\Component\DomCrawler\Field\FileFormField $champImage */
+        $champImage = $form['prestation[imageFichier]'];
+        $champImage->upload($this->creerFichierImageTemporaire());
         $client->submit($form);
 
         $entityManager->clear();

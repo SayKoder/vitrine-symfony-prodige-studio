@@ -57,6 +57,9 @@ class Commande
     #[Groups(['commande:read'])]
     private \DateTimeImmutable $createdAt;
 
+    /**
+     * @var Collection<int, LigneCommande>
+     */
     #[ORM\OneToMany(mappedBy: 'commande', targetEntity: LigneCommande::class, cascade: ['persist'], orphanRemoval: true)]
     #[Groups(['commande:read'])]
     private Collection $lignesCommande;
@@ -121,6 +124,9 @@ class Commande
         return $this->createdAt;
     }
 
+    /**
+     * @return Collection<int, LigneCommande>
+     */
     public function getLignesCommande(): Collection
     {
         return $this->lignesCommande;

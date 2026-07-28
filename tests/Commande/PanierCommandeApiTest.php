@@ -15,6 +15,9 @@ class PanierCommandeApiTest extends ApiTestCase
 
     protected static ?bool $alwaysBootKernel = true;
 
+    /**
+     * @param array<int, string> $roles
+     */
     private function createUser(array $roles): User
     {
         $container = self::getContainer();
