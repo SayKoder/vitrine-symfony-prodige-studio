@@ -18,11 +18,33 @@ docker compose exec php php bin/console doctrine:database:create
 
 Le site est ensuite accessible sur http://localhost:8080.
 
-## Tests
+Deux comptes de test sont crees par les fixtures :
 
 ```
-docker compose exec php php bin/phpunit
+docker compose exec php php bin/console doctrine:fixtures:load --no-interaction
 ```
+
+- admin@vitrineps.test / admin1234 (ROLE_ADMIN, acces a /admin)
+- client@vitrineps.test / client1234 (ROLE_CLIENT, acces a /compte)
+
+## Tests
+
+La base de test doit exister avant la premiere execution :
+
+```
+docker compose exec php php bin/console --env=test doctrine:database:create --if-not-exists
+docker compose exec php php bin/console --env=test doctrine:migrations:migrate --no-interaction
+```
+
+Puis, a chaque execution :
+
+```
+docker compose exec -e APP_ENV=test php php bin/phpunit
+```
+
+Le `-e APP_ENV=test` est necessaire car le conteneur `php` a `APP_ENV=dev`
+comme variable d'environnement reelle (voir `compose.yaml`), qui a la
+priorite sur la valeur forcee par `phpunit.dist.xml`.
 
 ## Organisation du projet
 
