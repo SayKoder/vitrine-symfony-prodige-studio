@@ -46,6 +46,9 @@ class Panier
     #[Groups(['panier:read'])]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    /**
+     * @var Collection<int, LignePanier>
+     */
     #[ORM\OneToMany(mappedBy: 'panier', targetEntity: LignePanier::class, cascade: ['persist'], orphanRemoval: true)]
     #[Groups(['panier:read'])]
     private Collection $lignesPanier;
@@ -84,6 +87,9 @@ class Panier
         return $this;
     }
 
+    /**
+     * @return Collection<int, LignePanier>
+     */
     public function getLignesPanier(): Collection
     {
         return $this->lignesPanier;

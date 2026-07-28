@@ -9,6 +9,9 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class SecurityControllerTest extends WebTestCase
 {
+    /**
+     * @param array<int, string> $roles
+     */
     private function createUser(array $roles): User
     {
         $container = static::getContainer();

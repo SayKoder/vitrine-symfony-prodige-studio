@@ -10,6 +10,9 @@ use App\User\Entity\User;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
+/**
+ * @implements ProviderInterface<Panier>
+ */
 class PanierMineProvider implements ProviderInterface
 {
     public function __construct(

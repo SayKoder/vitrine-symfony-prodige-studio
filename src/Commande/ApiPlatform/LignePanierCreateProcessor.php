@@ -10,6 +10,9 @@ use App\User\Entity\User;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
+/**
+ * @implements ProcessorInterface<LignePanierInput, LignePanier>
+ */
 class LignePanierCreateProcessor implements ProcessorInterface
 {
     public function __construct(

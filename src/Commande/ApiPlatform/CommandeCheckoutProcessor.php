@@ -10,6 +10,9 @@ use App\User\Entity\User;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
+/**
+ * @implements ProcessorInterface<CommandeCheckoutInput, Commande>
+ */
 class CommandeCheckoutProcessor implements ProcessorInterface
 {
     public function __construct(
@@ -26,8 +29,6 @@ class CommandeCheckoutProcessor implements ProcessorInterface
             throw new AccessDeniedException();
         }
 
-        $codePromo = $data instanceof CommandeCheckoutInput ? $data->codePromo : null;
-
-        return $this->commandeManager->checkout($user, $codePromo);
+        return $this->commandeManager->checkout($user, $data->codePromo);
     }
 }

@@ -6,6 +6,9 @@ use App\Commande\Entity\LignePanier;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * @extends ServiceEntityRepository<LignePanier>
+ */
 class LignePanierRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)

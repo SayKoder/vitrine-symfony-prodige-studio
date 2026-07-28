@@ -1,0 +1,9 @@
+.git
+.github
+.claude
+var/cache
+var/log
+node_modules
+.env
+.env.local
+.env.*.local

@@ -20,6 +20,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180)]
     private string $email;
 
+    /**
+     * @var array<int, string>
+     */
     #[ORM\Column]
     private array $roles = [];
 
@@ -65,6 +68,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->email;
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getRoles(): array
     {
         $roles = $this->roles;
@@ -73,6 +79,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return array_unique($roles);
     }
 
+    /**
+     * @param array<int, string> $roles
+     */
     public function setRoles(array $roles): static
     {
         $this->roles = $roles;
