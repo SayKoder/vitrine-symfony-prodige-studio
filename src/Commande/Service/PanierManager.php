@@ -58,4 +58,30 @@ class PanierManager
             $this->entityManager->remove($lignePanier);
         }
     }
+
+    public function calculerTotal(Panier $panier): string
+    {
+        $total = '0.00';
+
+        foreach ($panier->getLignesPanier() as $lignePanier) {
+            $sousTotal = bcmul($lignePanier->getPrestation()->getPrix(), (string) $lignePanier->getQuantite(), 2);
+            $total = bcadd($total, $sousTotal, 2);
+        }
+
+        return $total;
+    }
+
+    /**
+     * @return Prestation[]
+     */
+    public function listerPrestations(Panier $panier): array
+    {
+        $prestations = [];
+
+        foreach ($panier->getLignesPanier() as $lignePanier) {
+            $prestations[] = $lignePanier->getPrestation();
+        }
+
+        return $prestations;
+    }
 }
