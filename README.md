@@ -26,6 +26,10 @@ docker compose exec php php bin/console doctrine:fixtures:load --no-interaction
 
 - 3 prestations de demonstration, gerables depuis /admin/prestations
 
+Les e-mails envoyes en local (confirmation de commande, formulaire de
+contact) sont interceptes par Mailpit, consultables sur
+http://localhost:8025.
+
 ## Tests
 
 La base de test doit exister avant la premiere execution :

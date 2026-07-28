@@ -47,8 +47,47 @@
             </a>
         </div>
 
-        <p class="section-note" style="margin-top: 2.5rem;">
-            Le formulaire de contact en ligne arrive tres bientot. En attendant, ecrivez-moi directement par e-mail ou telephone.
-        </p>
+        <div class="contact-form-bloc">
+            <p class="label-or">Ou ecrivez-moi directement</p>
+            <h2 class="contact-form-titre">Parlez-moi de votre <span class="accent">projet</span></h2>
+
+            {{ form_start(form, {attr: {class: 'contact-form'}}) }}
+                <div class="contact-champ">
+                    {{ form_label(form.nom) }}
+                    {{ form_widget(form.nom) }}
+                    {{ form_errors(form.nom) }}
+                </div>
+
+                <div class="contact-champ">
+                    {{ form_label(form.email) }}
+                    {{ form_widget(form.email) }}
+                    {{ form_errors(form.email) }}
+                </div>
+
+                <div class="contact-champ">
+                    {{ form_label(form.telephone) }}
+                    {{ form_widget(form.telephone) }}
+                    {{ form_errors(form.telephone) }}
+                </div>
+
+                <div class="contact-champ">
+                    {{ form_label(form.sujet) }}
+                    {{ form_widget(form.sujet) }}
+                    {{ form_errors(form.sujet) }}
+                </div>
+
+                <div class="contact-champ contact-champ--pleine-largeur">
+                    {{ form_label(form.message) }}
+                    {{ form_widget(form.message) }}
+                    {{ form_errors(form.message) }}
+                </div>
+
+                <div class="champ-piege" aria-hidden="true">
+                    {{ form_widget(form.siteWeb) }}
+                </div>
+
+                <button type="submit" class="bouton bouton--plein">ENVOYER LE MESSAGE</button>
+            {{ form_end(form) }}
+        </div>
     </section>
 {% endblock %}

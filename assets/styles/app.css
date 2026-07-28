@@ -1309,3 +1309,110 @@ footer.pied-vitrine {
     color: rgb(var(--creme));
     margin: 0.75rem 0 1rem;
 }
+
+/* Messages flash */
+
+.flash-conteneur {
+    padding-top: 7rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.flash-message {
+    padding: 1rem 1.25rem;
+    border-radius: 2px;
+    font-size: 0.875rem;
+    border: 1px solid transparent;
+}
+
+.flash-message--succes {
+    color: rgb(var(--or));
+    background-color: rgb(var(--or) / 0.08);
+    border-color: rgb(var(--or) / 0.3);
+}
+
+.flash-message--erreur {
+    color: rgb(200 90 80);
+    background-color: rgb(200 90 80 / 0.08);
+    border-color: rgb(200 90 80 / 0.3);
+}
+
+/* Formulaire de contact */
+
+.contact-form-bloc {
+    margin-top: 3.5rem;
+    padding-top: 3rem;
+    border-top: 1px solid rgb(var(--or) / 0.15);
+}
+
+.contact-form-titre {
+    font-family: 'Cinzel', serif;
+    font-size: 1.3rem;
+    color: rgb(var(--creme));
+    margin: 0.5rem 0 2rem;
+}
+
+.contact-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    max-width: 40rem;
+}
+
+@media (min-width: 640px) {
+    .contact-form {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.contact-champ--pleine-largeur {
+    grid-column: 1 / -1;
+}
+
+.contact-champ label {
+    display: block;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgb(var(--gris-chaud));
+    margin-bottom: 0.5rem;
+}
+
+.contact-champ input,
+.contact-champ select,
+.contact-champ textarea {
+    width: 100%;
+    border-radius: 2px;
+    border: 1px solid rgb(var(--or) / 0.2);
+    background-color: rgb(var(--noir-2));
+    color: rgb(var(--creme));
+    padding: 0.6rem 0.75rem;
+    font-size: 0.875rem;
+    font-family: inherit;
+}
+
+.contact-champ textarea {
+    min-height: 8rem;
+    resize: vertical;
+}
+
+.contact-champ input:focus,
+.contact-champ select:focus,
+.contact-champ textarea:focus {
+    border-color: rgb(var(--or));
+    outline: none;
+}
+
+.contact-champ ul {
+    list-style: none;
+    margin: 0.5rem 0 0;
+    padding: 0;
+    color: rgb(200 90 80);
+    font-size: 0.8rem;
+}
+
+.contact-form .bouton {
+    grid-column: 1 / -1;
+    justify-self: start;
+}
