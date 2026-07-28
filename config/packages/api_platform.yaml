@@ -13,6 +13,8 @@ api_platform:
         jsonld: ['application/ld+json']
         json: ['application/json']
     defaults:
-        stateless: true
+        stateless: false
         cache_headers:
             vary: ['Content-Type', 'Authorization', 'Origin']
+    exception_to_status:
+        App\Commande\Service\PanierVideException: 400

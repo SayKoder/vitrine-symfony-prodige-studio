@@ -2,18 +2,36 @@
 
 namespace App\Commande\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use App\Commande\ApiPlatform\PanierMineProvider;
 use App\Commande\Repository\PanierRepository;
 use App\User\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
+#[ApiResource(
+    operations: [
+        new Get(
+            uriTemplate: '/paniers/mine',
+            provider: PanierMineProvider::class,
+            security: "is_granted('ROLE_USER')",
+        ),
+        new GetCollection(security: "is_granted('ROLE_ADMIN')"),
+        new Get(security: "is_granted('ROLE_ADMIN') or object.getUser() == user"),
+    ],
+    normalizationContext: ['groups' => ['panier:read', 'prestation:read']],
+)]
 #[ORM\Entity(repositoryClass: PanierRepository::class)]
 class Panier
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['panier:read'])]
     private ?int $id = null;
 
     #[ORM\OneToOne(targetEntity: User::class)]
@@ -21,12 +39,15 @@ class Panier
     private User $user;
 
     #[ORM\Column]
+    #[Groups(['panier:read'])]
     private \DateTimeImmutable $createdAt;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['panier:read'])]
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\OneToMany(mappedBy: 'panier', targetEntity: LignePanier::class, cascade: ['persist'], orphanRemoval: true)]
+    #[Groups(['panier:read'])]
     private Collection $lignesPanier;
 
     public function __construct(User $user)

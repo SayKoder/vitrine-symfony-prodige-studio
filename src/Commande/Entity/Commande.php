@@ -2,19 +2,39 @@
 
 namespace App\Commande\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use App\Commande\ApiPlatform\CommandeCheckoutInput;
+use App\Commande\ApiPlatform\CommandeCheckoutProcessor;
 use App\Commande\Repository\CommandeRepository;
 use App\Promotion\Entity\PromoCode;
 use App\User\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
+#[ApiResource(
+    operations: [
+        new GetCollection(security: "is_granted('ROLE_USER')"),
+        new Get(security: "is_granted('ROLE_ADMIN') or object.getUser() == user"),
+        new Post(
+            processor: CommandeCheckoutProcessor::class,
+            input: CommandeCheckoutInput::class,
+            security: "is_granted('ROLE_USER')",
+        ),
+    ],
+    normalizationContext: ['groups' => ['commande:read', 'prestation:read']],
+)]
 #[ORM\Entity(repositoryClass: CommandeRepository::class)]
 class Commande
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['commande:read'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
@@ -22,9 +42,11 @@ class Commande
     private User $user;
 
     #[ORM\Column(enumType: StatutCommande::class)]
+    #[Groups(['commande:read'])]
     private StatutCommande $statut;
 
     #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
+    #[Groups(['commande:read'])]
     private string $total;
 
     #[ORM\ManyToOne(targetEntity: PromoCode::class)]
@@ -32,9 +54,11 @@ class Commande
     private ?PromoCode $promoCode = null;
 
     #[ORM\Column]
+    #[Groups(['commande:read'])]
     private \DateTimeImmutable $createdAt;
 
     #[ORM\OneToMany(mappedBy: 'commande', targetEntity: LigneCommande::class, cascade: ['persist'], orphanRemoval: true)]
+    #[Groups(['commande:read'])]
     private Collection $lignesCommande;
 
     public function __construct(User $user, string $total)

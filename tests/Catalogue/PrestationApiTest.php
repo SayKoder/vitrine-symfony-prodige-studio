@@ -65,14 +65,16 @@ class PrestationApiTest extends ApiTestCase
         $client = self::createClient();
         $entityManager = self::getContainer()->get(EntityManagerInterface::class);
 
-        $this->createPrestation($entityManager, 'Reportage anniversaire', '80.00');
+        $motCle = uniqid('anniversaire-', true);
+        $nomUnique = 'Reportage '.$motCle;
+        $this->createPrestation($entityManager, $nomUnique, '80.00');
         $this->createPrestation($entityManager, 'Portrait entreprise', '150.00');
 
-        $response = $client->request('GET', '/api/prestations?nom=anniversaire', ['headers' => ['Accept' => 'application/json']]);
+        $response = $client->request('GET', '/api/prestations?nom='.$motCle, ['headers' => ['Accept' => 'application/json']]);
 
         self::assertResponseIsSuccessful();
         $noms = array_column($response->toArray(), 'nom');
-        self::assertSame(['Reportage anniversaire'], $noms);
+        self::assertSame([$nomUnique], $noms);
     }
 
     public function testWriteOperationsAreNotExposedByTheApi(): void
