@@ -20,4 +20,7 @@ COPY . .
 RUN touch .env \
     && mkdir -p var/cache var/log \
     && chown -R www-data:www-data var \
-    && composer dump-autoload --optimize
+    && composer dump-autoload --optimize \
+    && php bin/console importmap:install --env=prod \
+    && php bin/console asset-map:compile --env=prod \
+    && chown -R www-data:www-data var assets/vendor public/assets

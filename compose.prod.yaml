@@ -1,17 +1,45 @@
+networks:
+  web:
+    external: true
+
+volumes:
+  public_assets:
+
 services:
   php:
     environment:
       APP_ENV: prod
-      # A remplacer par le vrai nom de domaine du VPS avant tout deploiement reel
-      DEFAULT_URI: https://vitrineps.exemple.test
+      # A remplacer par le nom de domaine reel une fois la bascule finale decidee
+      DEFAULT_URI: https://preview.prodige-studio.me
+      APP_SECRET: ${APP_SECRET}
+      MAILER_DSN: ${MAILER_DSN}
+      MAILER_EXPEDITEUR: ${MAILER_EXPEDITEUR}
+    volumes:
+      - public_assets:/var/www/html/public_shared
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        mkdir -p /var/www/html/public_shared
+        rm -rf /var/www/html/public_shared/*
+        cp -a /var/www/html/public/. /var/www/html/public_shared/
+        exec docker-php-entrypoint php-fpm
     restart: unless-stopped
 
   nginx:
     volumes:
       - ./docker/nginx/prod.conf.d:/etc/nginx/conf.d:ro
-      - ./public:/var/www/html/public:ro
-    ports:
-      - "80:80"
+      - public_assets:/var/www/html/public:ro
+    networks:
+      - default
+      - web
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=web"
+      - "traefik.http.routers.vitrineps.rule=Host(`preview.prodige-studio.me`)"
+      - "traefik.http.routers.vitrineps.entrypoints=websecure"
+      - "traefik.http.routers.vitrineps.tls.certresolver=letsencrypt"
+      - "traefik.http.services.vitrineps.loadbalancer.server.port=80"
     restart: unless-stopped
 
   database:
