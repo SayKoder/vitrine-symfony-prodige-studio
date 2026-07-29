@@ -25,14 +25,16 @@ class PrestationApiTest extends ApiTestCase
         $client = self::createClient();
         $entityManager = self::getContainer()->get(EntityManagerInterface::class);
 
-        $this->createPrestation($entityManager, 'Prestation active visible', '100.00');
-        $inactive = $this->createPrestation($entityManager, 'Prestation masquee', '100.00', false);
+        $prefixe = uniqid('visibilite-', true);
+        $nomActif = $prefixe.' active visible';
+        $this->createPrestation($entityManager, $nomActif, '100.00');
+        $inactive = $this->createPrestation($entityManager, $prefixe.' masquee', '100.00', false);
 
-        $response = $client->request('GET', '/api/prestations', ['headers' => ['Accept' => 'application/json']]);
+        $response = $client->request('GET', '/api/prestations?nom='.$prefixe, ['headers' => ['Accept' => 'application/json']]);
 
         self::assertResponseIsSuccessful();
         $noms = array_column($response->toArray(), 'nom');
-        self::assertContains('Prestation active visible', $noms);
+        self::assertContains($nomActif, $noms);
         self::assertNotContains($inactive->getNom(), $noms);
     }
 
