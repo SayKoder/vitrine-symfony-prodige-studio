@@ -1,0 +1,18 @@
+services:
+  php:
+    environment:
+      APP_ENV: prod
+      # A remplacer par le vrai nom de domaine du VPS avant tout deploiement reel
+      DEFAULT_URI: https://vitrineps.exemple.test
+    restart: unless-stopped
+
+  nginx:
+    volumes:
+      - ./docker/nginx/prod.conf.d:/etc/nginx/conf.d:ro
+      - ./public:/var/www/html/public:ro
+    ports:
+      - "80:80"
+    restart: unless-stopped
+
+  database:
+    restart: unless-stopped

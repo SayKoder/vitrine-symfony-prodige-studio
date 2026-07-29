@@ -13,18 +13,8 @@ services:
 
   nginx:
     image: nginx:1.27-alpine
-    volumes:
-      - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
-      - ./public:/var/www/html/public:ro
-    ports:
-      - "8080:80"
     depends_on:
       - php
-
-  mailpit:
-    image: axllent/mailpit:latest
-    ports:
-      - "8025:8025"
 
 ###> doctrine/doctrine-bundle ###
   database:
