@@ -17,6 +17,7 @@ RUN composer install --no-scripts --no-interaction --prefer-dist --no-progress
 
 COPY . .
 
-RUN mkdir -p var/cache var/log \
+RUN touch .env \
+    && mkdir -p var/cache var/log \
     && chown -R www-data:www-data var \
     && composer dump-autoload --optimize

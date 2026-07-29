@@ -1,6 +1,7 @@
 .git
 .github
 .claude
+vendor
 var/cache
 var/log
 node_modules
