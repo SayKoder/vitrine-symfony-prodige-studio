@@ -1,4 +1,4 @@
-const CACHE_STATIQUE = 'vitrineps-statique-v1';
+const CACHE_STATIQUE = 'vitrineps-statique-v2';
 const CACHE_PAGES = 'vitrineps-pages-v1';
 const CACHES_CONNUS = [CACHE_STATIQUE, CACHE_PAGES];
 

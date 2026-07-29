@@ -1,0 +1,56 @@
+{% extends 'public/base.html.twig' %}
+
+{% block title %}Galerie - Back office{% endblock %}
+
+{% block contenu %}
+    <section class="section conteneur" style="padding-top: 7rem;">
+        <div class="section-entete">
+            <p class="label-or">Back office</p>
+            <h1 class="section-titre">La <span class="accent">galerie</span></h1>
+        </div>
+
+        <div class="admin-actions">
+            <a href="{{ path('admin_photo_new') }}" class="bouton bouton--plein">AJOUTER UNE PHOTO</a>
+        </div>
+
+        <div class="tableau-conteneur">
+            <table class="tableau">
+                <thead>
+                    <tr>
+                        <th>Apercu</th>
+                        <th>Categorie</th>
+                        <th>Legende</th>
+                        <th>Mise en avant</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for photo in photos %}
+                    <tr>
+                        <td>
+                            {% if photo.image %}
+                                <img src="/uploads/photos/{{ photo.image }}" alt="{{ photo.legende ?: photo.categorie.libelle }}" width="60">
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                        <td>{{ photo.categorie.libelle }}</td>
+                        <td>{{ photo.legende ?: '-' }}</td>
+                        <td>
+                            <span class="badge {{ photo.misEnAvant ? '' : 'badge--inactif' }}">{{ photo.misEnAvant ? 'Oui' : 'Non' }}</span>
+                        </td>
+                        <td>
+                            <a href="{{ path('admin_photo_show', {id: photo.id}) }}">Voir</a>
+                            <a href="{{ path('admin_photo_edit', {id: photo.id}) }}">Modifier</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">Aucune photo pour le moment.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+{% endblock %}

@@ -4,6 +4,7 @@ namespace App\Catalogue\Controller;
 
 use App\Catalogue\Form\ContactMessage;
 use App\Catalogue\Form\ContactType;
+use App\Catalogue\Repository\PhotoRepository;
 use App\Catalogue\Service\ContactMailer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,15 +15,19 @@ use Symfony\Component\Routing\Attribute\Route;
 class VitrineController extends AbstractController
 {
     #[Route('/', name: 'app_home', methods: ['GET'])]
-    public function accueil(): Response
+    public function accueil(PhotoRepository $photoRepository): Response
     {
-        return $this->render('public/home.html.twig');
+        return $this->render('public/home.html.twig', [
+            'photosMisesEnAvant' => $photoRepository->misesEnAvant(3),
+        ]);
     }
 
     #[Route('/galerie', name: 'app_galerie', methods: ['GET'])]
-    public function galerie(): Response
+    public function galerie(PhotoRepository $photoRepository): Response
     {
-        return $this->render('public/galerie.html.twig');
+        return $this->render('public/galerie.html.twig', [
+            'photos' => $photoRepository->pourGalerie(),
+        ]);
     }
 
     #[Route('/a-propos', name: 'app_a_propos', methods: ['GET'])]
