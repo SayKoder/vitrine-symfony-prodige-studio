@@ -1,0 +1,38 @@
+{% extends 'public/base.html.twig' %}
+
+{% block title %}Mon panier - Prodige Studio{% endblock %}
+
+{% block contenu %}
+    <section class="section conteneur panier-section" style="padding-top: 7rem;" data-controller="panier">
+        <div class="section-entete">
+            <p class="label-or">Avant de reserver</p>
+            <h1 class="section-titre">Mon <span class="accent">panier</span></h1>
+        </div>
+
+        <div class="panier-lignes" data-panier-target="lignes"></div>
+
+        <p class="section-note panier-vide" data-panier-target="vide" hidden>
+            Votre panier est vide pour le moment. Direction le <a href="{{ path('app_prestations') }}">catalogue</a> pour choisir une prestation.
+        </p>
+
+        <div class="panier-bas">
+            <form class="panier-promo-form" data-action="panier#validerPromo">
+                <label for="code-promo">Code promo</label>
+                <div class="panier-promo-champ">
+                    <input type="text" id="code-promo" data-panier-target="promoCode" placeholder="Votre code">
+                    <button type="submit" class="bouton bouton--contour">APPLIQUER</button>
+                </div>
+                <p class="panier-promo-resultat" data-panier-target="promoResultat"></p>
+            </form>
+
+            <div class="panier-total">
+                <span>Total</span>
+                <span data-panier-target="total">0.00&euro;</span>
+            </div>
+        </div>
+
+        <div class="panier-suite">
+            <a href="{{ path('app_tunnel') }}" class="bouton bouton--plein" data-panier-target="validerLien" hidden>PASSER COMMANDE</a>
+        </div>
+    </section>
+{% endblock %}

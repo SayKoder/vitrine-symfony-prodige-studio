@@ -1,0 +1,93 @@
+{% extends 'public/base.html.twig' %}
+
+{% block title %}Contact - Prodige Studio{% endblock %}
+
+{% block meta_description %}
+    <meta name="description" content="Contactez Prodige Studio par e-mail, telephone ou reseaux sociaux pour discuter de votre projet photo a Reims et en region.">
+{% endblock %}
+
+{% block meta_og %}
+    {{ parent() }}
+    <meta property="og:title" content="Contact - Prodige Studio">
+    <meta property="og:description" content="Un projet photo en tete ? Contactez Prodige Studio par e-mail ou telephone.">
+    <meta property="og:type" content="website">
+{% endblock %}
+
+{% block contenu %}
+    <section class="section conteneur" style="padding-top: 7rem;">
+        <p class="label-or">Envie de travailler ensemble ?</p>
+        <h1 class="contact-titre" style="margin-top: 0.5rem;">Discutons de <span class="accent">votre projet</span></h1>
+        <p class="section-note" style="max-width: 32rem;">
+            Racontez-moi votre projet (portrait, mariage, corporate, evenement) et je reviens vers vous sous 48h.
+        </p>
+
+        <div class="contact-cartes">
+            <a href="mailto:carl.heintz02@gmail.com" class="cadre-coin contact-carte-item">
+                <span class="destination-numero">@</span>
+                <p class="destination-titre">E-mail</p>
+                <p class="destination-texte">carl.heintz02@gmail.com</p>
+            </a>
+
+            <a href="tel:0640277716" class="cadre-coin contact-carte-item">
+                <span class="destination-numero">&#9742;</span>
+                <p class="destination-titre">Telephone</p>
+                <p class="destination-texte">06 40 27 77 16</p>
+            </a>
+
+            <a href="https://www.instagram.com/prodigestudiooff/" target="_blank" rel="noopener noreferrer" class="cadre-coin contact-carte-item">
+                <span class="destination-numero">IG</span>
+                <p class="destination-titre">Instagram</p>
+                <p class="destination-texte">&#64;prodigestudiooff</p>
+            </a>
+
+            <a href="https://www.facebook.com/profile.php?id=61577136381001" target="_blank" rel="noopener noreferrer" class="cadre-coin contact-carte-item">
+                <span class="destination-numero">FB</span>
+                <p class="destination-titre">Facebook</p>
+                <p class="destination-texte">Prodige Studio</p>
+            </a>
+        </div>
+
+        <div class="contact-form-bloc">
+            <p class="label-or">Ou ecrivez-moi directement</p>
+            <h2 class="contact-form-titre">Parlez-moi de votre <span class="accent">projet</span></h2>
+
+            {{ form_start(form, {attr: {class: 'contact-form'}}) }}
+                <div class="contact-champ">
+                    {{ form_label(form.nom) }}
+                    {{ form_widget(form.nom) }}
+                    {{ form_errors(form.nom) }}
+                </div>
+
+                <div class="contact-champ">
+                    {{ form_label(form.email) }}
+                    {{ form_widget(form.email) }}
+                    {{ form_errors(form.email) }}
+                </div>
+
+                <div class="contact-champ">
+                    {{ form_label(form.telephone) }}
+                    {{ form_widget(form.telephone) }}
+                    {{ form_errors(form.telephone) }}
+                </div>
+
+                <div class="contact-champ">
+                    {{ form_label(form.sujet) }}
+                    {{ form_widget(form.sujet) }}
+                    {{ form_errors(form.sujet) }}
+                </div>
+
+                <div class="contact-champ contact-champ--pleine-largeur">
+                    {{ form_label(form.message) }}
+                    {{ form_widget(form.message) }}
+                    {{ form_errors(form.message) }}
+                </div>
+
+                <div class="champ-piege" aria-hidden="true">
+                    {{ form_widget(form.siteWeb) }}
+                </div>
+
+                <button type="submit" class="bouton bouton--plein">ENVOYER LE MESSAGE</button>
+            {{ form_end(form) }}
+        </div>
+    </section>
+{% endblock %}

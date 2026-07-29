@@ -1,0 +1,20 @@
+includes:
+    - vendor/phpstan/phpstan-symfony/extension.neon
+    - vendor/phpstan/phpstan-symfony/rules.neon
+    - vendor/phpstan/phpstan-doctrine/extension.neon
+    - vendor/phpstan/phpstan-doctrine/rules.neon
+
+parameters:
+    level: 6
+    paths:
+        - src
+        - tests
+    symfony:
+        containerXmlPath: var/cache/dev/App_KernelDevDebugContainer.xml
+    ignoreErrors:
+        -
+            message: '#Call to static method PHPUnit\\Framework\\Assert::assertTrue\(\) with true will always evaluate to true\.#'
+            path: tests/Promotion/PromoCodeManagerTest.php
+        -
+            message: '#Call to function method_exists\(\) with .*Dotenv.* and .*bootEnv.* will always evaluate to true\.#'
+            path: tests/bootstrap.php

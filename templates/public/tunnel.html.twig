@@ -1,0 +1,44 @@
+{% extends 'public/base.html.twig' %}
+
+{% block title %}Valider ma commande - Prodige Studio{% endblock %}
+
+{% block contenu %}
+    <section class="section conteneur tunnel-section" style="padding-top: 7rem;" data-controller="tunnel">
+        <div class="section-entete" data-tunnel-target="entete">
+            <p class="label-or">Derniere etape</p>
+            <h1 class="section-titre">Valider <span class="accent">ma commande</span></h1>
+        </div>
+
+        <div data-tunnel-target="recap">
+            <div class="panier-lignes" data-tunnel-target="lignes"></div>
+
+            <p class="section-note panier-vide" data-tunnel-target="vide" hidden>
+                Votre panier est vide. Direction le <a href="{{ path('app_prestations') }}">catalogue</a> pour choisir une prestation.
+            </p>
+
+            <p class="tunnel-promo" data-tunnel-target="promo" hidden></p>
+
+            <div class="panier-bas">
+                <a href="{{ path('app_panier') }}" class="bouton bouton--contour">MODIFIER MON PANIER</a>
+
+                <div class="panier-total">
+                    <span>Total</span>
+                    <span data-tunnel-target="total">0.00&euro;</span>
+                </div>
+            </div>
+
+            <p class="tunnel-erreur" data-tunnel-target="erreur" hidden></p>
+
+            <button type="button" class="bouton bouton--plein tunnel-valider" data-tunnel-target="validerBouton" data-action="tunnel#valider">
+                VALIDER MA COMMANDE
+            </button>
+        </div>
+
+        <div class="tunnel-confirmation" data-tunnel-target="confirmation" hidden>
+            <p class="label-or">Commande confirmee</p>
+            <h2 class="tunnel-confirmation-titre">Merci, votre reservation est enregistree</h2>
+            <p class="section-note" data-tunnel-target="confirmationTexte"></p>
+            <a href="{{ path('app_compte_dashboard') }}" class="bouton bouton--contour">VOIR MON COMPTE</a>
+        </div>
+    </section>
+{% endblock %}

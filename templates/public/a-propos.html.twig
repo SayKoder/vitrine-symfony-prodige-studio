@@ -1,0 +1,78 @@
+{% extends 'public/base.html.twig' %}
+
+{% block title %}A propos - Prodige Studio{% endblock %}
+
+{% block meta_description %}
+    <meta name="description" content="A propos de Prodige Studio : la demarche, la philosophie et l'experience derriere chaque seance photo a Reims et en region.">
+{% endblock %}
+
+{% block meta_og %}
+    {{ parent() }}
+    <meta property="og:title" content="A propos - Prodige Studio">
+    <meta property="og:description" content="La demarche et la philosophie derriere chaque prise de vue de Prodige Studio.">
+    <meta property="og:type" content="website">
+{% endblock %}
+
+{% block contenu %}
+    <section class="section conteneur" style="padding-top: 7rem;">
+        <p class="label-or">L'artiste derriere l'objectif</p>
+
+        <h1 class="citation-propos">
+            Capturer l'authentique,
+            <br>
+            <span class="accent">sublimer l'ordinaire.</span>
+        </h1>
+
+        <div class="about-stats" style="margin-top: 2.5rem;">
+            <div class="about-stat">
+                <p class="about-stat-valeur">5+</p>
+                <p class="about-stat-label">ANS D'EXP.</p>
+            </div>
+            <div class="about-stat">
+                <p class="about-stat-valeur">FR&middot;EU</p>
+                <p class="about-stat-label">COUVERTURE</p>
+            </div>
+            <div class="about-stat">
+                <p class="about-stat-valeur">100%</p>
+                <p class="about-stat-label">SUR-MESURE</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section conteneur">
+        <div class="section-entete">
+            <p class="label-or">La demarche</p>
+            <h2 class="section-titre">Trois <span class="accent">principes</span></h2>
+        </div>
+
+        <div class="piliers-grille">
+            <div class="cadre-coin pilier-carte">
+                <span class="destination-numero">01</span>
+                <p class="destination-titre">Authenticite</p>
+                <p class="destination-texte">Des images qui racontent une vraie histoire plutot que des poses figees, pour un rendu naturel et sincere.</p>
+            </div>
+
+            <div class="cadre-coin pilier-carte">
+                <span class="destination-numero">02</span>
+                <p class="destination-titre">Exigence technique</p>
+                <p class="destination-texte">Materiel professionnel, lumiere maitrisee et retouche soignee sur chaque livraison.</p>
+            </div>
+
+            <div class="cadre-coin pilier-carte">
+                <span class="destination-numero">03</span>
+                <p class="destination-titre">Relation de confiance</p>
+                <p class="destination-texte">Un accompagnement du premier echange jusqu'a la livraison finale, sans surprise.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section conteneur">
+        <div class="cta-bandeau">
+            <div>
+                <p class="label-or">Envie d'aller plus loin ?</p>
+                <h2 class="section-titre">Parlons de <span class="accent">votre projet</span></h2>
+            </div>
+            <a href="{{ path('app_contact') }}" class="bouton bouton--plein">PRENDRE CONTACT</a>
+        </div>
+    </section>
+{% endblock %}

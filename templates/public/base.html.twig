@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block meta_robots %}<meta name="robots" content="index, follow">{% endblock %}
+
+{% block meta_og %}
+    <meta property="og:site_name" content="Prodige Studio">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:url" content="{{ app.request.uri }}">
+    <link rel="canonical" href="{{ app.request.uri }}">
+    <meta name="twitter:card" content="summary">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "Prodige Studio",
+        "url": "{{ app.request.schemeAndHttpHost }}",
+        "telephone": "+33640277716",
+        "email": "carl.heintz02@gmail.com",
+        "areaServed": "Reims, France",
+        "sameAs": [
+            "https://www.instagram.com/prodigestudiooff/",
+            "https://www.facebook.com/profile.php?id=61577136381001"
+        ]
+    }
+    </script>
+{% endblock %}
+
+{% block body %}
+    {% include 'public/_nav.html.twig' %}
+
+    <main>
+        {% set flashesSucces = app.flashes('success') %}
+        {% set flashesErreur = app.flashes('error') %}
+
+        {% if flashesSucces|length or flashesErreur|length %}
+            <div class="conteneur flash-conteneur">
+                {% for message in flashesSucces %}
+                    <div class="flash-message flash-message--succes">{{ message }}</div>
+                {% endfor %}
+                {% for message in flashesErreur %}
+                    <div class="flash-message flash-message--erreur">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% block contenu %}{% endblock %}
+    </main>
+
+    {% include 'public/_footer.html.twig' %}
+{% endblock %}

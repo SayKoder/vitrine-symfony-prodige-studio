@@ -1,0 +1,25 @@
+
+services:
+  php:
+    volumes:
+      - ./:/var/www/html:cached
+      - php_vendor:/var/www/html/vendor
+      - php_var:/var/www/html/var
+
+  mailpit:
+    image: axllent/mailpit:latest
+    ports:
+      - "8025:8025"
+
+  nginx:
+    volumes:
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./public:/var/www/html/public:ro
+    ports:
+      - "8080:80"
+
+###> doctrine/doctrine-bundle ###
+  database:
+    ports:
+      - "5432"
+###< doctrine/doctrine-bundle ###
