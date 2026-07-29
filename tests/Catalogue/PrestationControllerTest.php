@@ -126,7 +126,7 @@ class PrestationControllerTest extends WebTestCase
 
         self::assertResponseRedirects('/admin/prestations');
         $client->followRedirect();
-        self::assertSelectorTextContains('.alert-error', 'ne peut pas etre supprimee');
+        self::assertSelectorTextContains('.flash-message--erreur', 'ne peut pas etre supprimee');
         self::assertNotNull($entityManager->getRepository(Prestation::class)->find($id));
     }
 
