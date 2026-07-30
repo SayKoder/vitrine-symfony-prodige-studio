@@ -4,6 +4,7 @@ networks:
 
 volumes:
   public_assets:
+  uploads:
 
 services:
   php:
@@ -16,6 +17,7 @@ services:
       MAILER_EXPEDITEUR: ${MAILER_EXPEDITEUR}
     volumes:
       - public_assets:/var/www/html/public_shared
+      - uploads:/var/www/html/public/uploads
     entrypoint:
       - /bin/sh
       - -c
@@ -30,6 +32,7 @@ services:
     volumes:
       - ./docker/nginx/prod.conf.d:/etc/nginx/conf.d:ro
       - public_assets:/var/www/html/public:ro
+      - uploads:/var/www/html/public/uploads:ro
     networks:
       - default
       - web
