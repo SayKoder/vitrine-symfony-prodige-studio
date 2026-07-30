@@ -23,4 +23,4 @@ RUN touch .env \
     && composer dump-autoload --optimize \
     && php bin/console importmap:install --env=prod \
     && php bin/console asset-map:compile --env=prod \
-    && chown -R www-data:www-data var assets/vendor public/assets
+    && chown -R www-data:www-data var assets/vendor public/assets public/uploads
