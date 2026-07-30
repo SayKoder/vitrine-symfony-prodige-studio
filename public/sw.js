@@ -1,10 +1,13 @@
-const CACHE_STATIQUE = 'vitrineps-statique-v2';
-const CACHE_PAGES = 'vitrineps-pages-v1';
+const CACHE_STATIQUE = 'vitrineps-statique-v3';
+const CACHE_PAGES = 'vitrineps-pages-v2';
 const CACHES_CONNUS = [CACHE_STATIQUE, CACHE_PAGES];
 
 self.addEventListener('install', (event) => {
     event.waitUntil(
-        caches.open(CACHE_PAGES).then((cache) => cache.add('/')),
+        caches.open(CACHE_PAGES).then(async (cache) => {
+            const reponse = await fetch('/');
+            await mettreEnCacheSansEncodage(cache, '/', reponse);
+        }),
     );
     self.skipWaiting();
 });
@@ -37,6 +40,23 @@ self.addEventListener('fetch', (event) => {
     }
 });
 
+async function mettreEnCacheSansEncodage(cache, request, reponseReseau) {
+    if (!reponseReseau.ok) {
+        return;
+    }
+
+    const corps = await reponseReseau.clone().arrayBuffer();
+    const enTetes = new Headers(reponseReseau.headers);
+    enTetes.delete('content-encoding');
+    enTetes.delete('content-length');
+
+    await cache.put(request, new Response(corps, {
+        status: reponseReseau.status,
+        statusText: reponseReseau.statusText,
+        headers: enTetes,
+    }));
+}
+
 async function gererRessourceStatique(request) {
     const cache = await caches.open(CACHE_STATIQUE);
     const reponseEnCache = await cache.match(request);
@@ -46,7 +66,7 @@ async function gererRessourceStatique(request) {
     }
 
     const reponseReseau = await fetch(request);
-    cache.put(request, reponseReseau.clone());
+    await mettreEnCacheSansEncodage(cache, request, reponseReseau);
 
     return reponseReseau;
 }
@@ -56,7 +76,7 @@ async function gererNavigation(request) {
 
     try {
         const reponseReseau = await fetch(request);
-        cache.put(request, reponseReseau.clone());
+        await mettreEnCacheSansEncodage(cache, request, reponseReseau);
 
         return reponseReseau;
     } catch (erreur) {
