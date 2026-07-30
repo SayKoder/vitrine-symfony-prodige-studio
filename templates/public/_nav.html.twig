@@ -1,5 +1,8 @@
 {% import 'public/_logo.html.twig' as logo %}
 
+{% set route_compte = app.user ? (is_granted('ROLE_ADMIN') ? 'app_admin_dashboard' : 'app_compte_dashboard') : 'app_login' %}
+{% set libelle_compte = app.user ? 'MON COMPTE' : 'CONNEXION' %}
+
 <nav class="nav" data-controller="nav" data-nav-reduite-class="nav--reduite">
     <a href="{{ path('app_home') }}" aria-label="Prodige Studio" style="color: rgb(var(--creme));">
         {{ logo.logo('nav-logo') }}
@@ -17,6 +20,13 @@
     </div>
 
     <div class="nav-controles">
+        <a href="{{ path(route_compte) }}" class="nav-compte {{ app.current_route == route_compte ? 'actif' }}" aria-label="{{ libelle_compte }}" title="{{ libelle_compte }}">
+            <svg width="16" height="16" viewBox="0 0 22 22" fill="none">
+                <circle cx="11" cy="7" r="4" stroke="currentColor" stroke-width="1.5" />
+                <path d="M3.5 19c1.5-4 5-6 7.5-6s6 2 7.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+            </svg>
+        </a>
+
         <button type="button" class="nav-bascule-theme" data-controller="theme" data-action="theme#basculer" aria-label="Changer de theme" title="Diaphragme">
             {{ logo.signature() }}
         </button>
@@ -39,5 +49,6 @@
         {% if app.user %}
             <a href="{{ path('app_panier') }}" data-action="nav#fermerMenu" class="{{ app.current_route == 'app_panier' ? 'actif' }}">PANIER</a>
         {% endif %}
+        <a href="{{ path(route_compte) }}" data-action="nav#fermerMenu" class="{{ app.current_route == route_compte ? 'actif' }}">{{ libelle_compte }}</a>
     </div>
 </nav>
