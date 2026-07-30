@@ -77,6 +77,35 @@ class SecurityControllerTest extends WebTestCase
         self::assertResponseIsSuccessful();
     }
 
+    public function testTooManyFailedLoginAttemptsAreThrottled(): void
+    {
+        $client = static::createClient();
+        static::getContainer()->get('cache.rate_limiter')->clear();
+        $client->setServerParameter('REMOTE_ADDR', '203.0.113.51');
+        $user = $this->createUser(['ROLE_CLIENT']);
+
+        for ($i = 0; $i < 5; ++$i) {
+            $crawler = $client->request('GET', '/login');
+            $form = $crawler->selectButton('Se connecter')->form([
+                '_username' => $user->getEmail(),
+                '_password' => 'mauvais-mot-de-passe',
+            ]);
+            $client->submit($form);
+            self::assertResponseRedirects('/login');
+        }
+
+        $crawler = $client->request('GET', '/login');
+        $form = $crawler->selectButton('Se connecter')->form([
+            '_username' => $user->getEmail(),
+            '_password' => 'password1234',
+        ]);
+        $client->submit($form);
+
+        self::assertResponseRedirects('/login');
+        $client->followRedirect();
+        self::assertSelectorTextContains('.flash-message--erreur', 'tentatives de connexion');
+    }
+
     public function testLoginFormAuthenticatesValidCredentials(): void
     {
         $client = static::createClient();

@@ -72,6 +72,37 @@ class ContactFormTest extends WebTestCase
         self::assertEmailCount(0);
     }
 
+    public function testRateLimitBlocksExcessiveSubmissions(): void
+    {
+        $client = static::createClient();
+        static::getContainer()->get('rate_limiter.storage')->clear();
+        $client->setServerParameter('REMOTE_ADDR', '203.0.113.50');
+
+        $soumettre = function () use ($client): void {
+            $crawler = $client->request('GET', '/contact');
+            $form = $crawler->selectButton('ENVOYER LE MESSAGE')->form([
+                'contact[nom]' => 'Camille Test',
+                'contact[email]' => 'camille@example.test',
+                'contact[sujet]' => 'Mariage',
+                'contact[message]' => 'Nous cherchons un photographe pour notre mariage en septembre prochain.',
+            ]);
+            $client->submit($form);
+        };
+
+        for ($i = 0; $i < 5; ++$i) {
+            $soumettre();
+            self::assertResponseRedirects('/contact');
+            self::assertEmailCount(1);
+        }
+
+        $soumettre();
+        self::assertResponseRedirects('/contact');
+        self::assertEmailCount(0);
+
+        $client->followRedirect();
+        self::assertSelectorTextContains('.flash-message--erreur', 'Trop de messages');
+    }
+
     public function testHoneypotFilledSilentlyDropsMessage(): void
     {
         $client = static::createClient();

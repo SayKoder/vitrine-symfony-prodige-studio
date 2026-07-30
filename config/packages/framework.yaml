@@ -5,6 +5,14 @@ framework:
     # Note that the session will be started ONLY if you read or write from it.
     session: true
 
+    # L'application tourne toujours derriere nginx (et Traefik en prod), jamais
+    # exposee directement : ces plages privees sont les seules a pouvoir se
+    # connecter au conteneur php, donc leur faire confiance pour les en-tetes
+    # X-Forwarded-* est necessaire pour que Symfony detecte correctement le
+    # HTTPS et l'IP reelle du visiteur.
+    trusted_proxies: '10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,127.0.0.0/8'
+    trusted_headers: ['x-forwarded-for', 'x-forwarded-host', 'x-forwarded-proto', 'x-forwarded-port']
+
     #esi: true
     #fragments: true
 

@@ -33,7 +33,7 @@
                 <a href="{{ path('admin_prestation_index') }}" class="bouton bouton--contour">RETOUR A LA LISTE</a>
             </div>
 
-            <form method="post" action="{{ path('admin_prestation_delete', {id: prestation.id}) }}" onsubmit="return confirm('Supprimer cette prestation ?');">
+            <form method="post" action="{{ path('admin_prestation_delete', {id: prestation.id}) }}" data-controller="confirmation" data-action="submit->confirmation#confirmer" data-confirmation-message-value="Supprimer cette prestation ?">
                 <input type="hidden" name="_token" value="{{ csrf_token('delete-prestation-' ~ prestation.id) }}">
                 <button type="submit" class="bouton bouton--danger">SUPPRIMER</button>
             </form>

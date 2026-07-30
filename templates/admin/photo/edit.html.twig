@@ -16,7 +16,7 @@
             <a href="{{ path('admin_photo_index') }}" class="bouton bouton--contour">RETOUR A LA GALERIE</a>
         </div>
 
-        <form method="post" action="{{ path('admin_photo_delete', {id: photo.id}) }}" onsubmit="return confirm('Supprimer cette photo ?');">
+        <form method="post" action="{{ path('admin_photo_delete', {id: photo.id}) }}" data-controller="confirmation" data-action="submit->confirmation#confirmer" data-confirmation-message-value="Supprimer cette photo ?">
             <input type="hidden" name="_token" value="{{ csrf_token('delete-photo-' ~ photo.id) }}">
             <button type="submit" class="bouton bouton--danger">SUPPRIMER</button>
         </form>
