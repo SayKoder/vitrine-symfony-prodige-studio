@@ -1,0 +1,33 @@
+{{ form_start(form, {attr: {class: 'form-grille'}}) }}
+    <div class="champ">
+        {{ form_label(form.categorie) }}
+        {{ form_widget(form.categorie) }}
+        {{ form_errors(form.categorie) }}
+    </div>
+
+    <div class="champ">
+        {{ form_label(form.legende) }}
+        {{ form_widget(form.legende) }}
+        {{ form_errors(form.legende) }}
+    </div>
+
+    <div class="champ champ--case">
+        {{ form_widget(form.misEnAvant) }}
+        {{ form_label(form.misEnAvant) }}
+    </div>
+
+    {% if photo is defined and photo.image %}
+        <div class="champ champ--pleine-largeur admin-image-actuelle">
+            <label>Photo actuelle</label>
+            <img src="/uploads/photos/{{ photo.image }}" alt="{{ photo.legende ?: photo.categorie.libelle }}" width="200">
+        </div>
+    {% endif %}
+
+    <div class="champ champ--pleine-largeur">
+        {{ form_label(form.imageFichier) }}
+        {{ form_widget(form.imageFichier) }}
+        {{ form_errors(form.imageFichier) }}
+    </div>
+
+    <button type="submit" class="bouton bouton--plein">Enregistrer</button>
+{{ form_end(form) }}

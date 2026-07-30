@@ -1,23 +1,32 @@
-{% extends 'base.html.twig' %}
+{% extends 'public/base.html.twig' %}
 
-{% block title %}Connexion{% endblock %}
+{% block title %}Connexion - Prodige Studio{% endblock %}
 
-{% block body %}
-    <h1>Connexion</h1>
+{% block contenu %}
+    <section class="section conteneur" style="padding-top: 7rem;">
+        <div class="panel">
+            <p class="label-or">Espace client</p>
+            <h1 class="section-titre">Se <span class="accent">connecter</span></h1>
 
-    {% if error %}
-        <div class="alert alert-error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+            {% if error %}
+                <div class="flash-message flash-message--erreur" style="margin-top: 1.5rem;">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
 
-    <form method="post">
-        <label for="username">Email</label>
-        <input type="email" value="{{ last_username }}" name="_username" id="username" autocomplete="email" required autofocus>
+            <form method="post" class="form-grille" style="margin-top: 2rem;">
+                <div class="champ champ--pleine-largeur">
+                    <label for="username">Email</label>
+                    <input type="email" value="{{ last_username }}" name="_username" id="username" autocomplete="email" required autofocus>
+                </div>
 
-        <label for="password">Mot de passe</label>
-        <input type="password" name="_password" id="password" autocomplete="current-password" required>
+                <div class="champ champ--pleine-largeur">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" name="_password" id="password" autocomplete="current-password" required>
+                </div>
 
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-        <button type="submit">Se connecter</button>
-    </form>
+                <button type="submit" class="bouton bouton--plein">Se connecter</button>
+            </form>
+        </div>
+    </section>
 {% endblock %}

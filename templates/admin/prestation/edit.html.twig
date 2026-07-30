@@ -1,17 +1,24 @@
-{% extends 'base.html.twig' %}
+{% extends 'public/base.html.twig' %}
 
-{% block title %}Modifier {{ prestation.nom }}{% endblock %}
+{% block title %}Modifier {{ prestation.nom }} - Back office{% endblock %}
 
-{% block body %}
-    <h1>Modifier {{ prestation.nom }}</h1>
+{% block contenu %}
+    <section class="section conteneur" style="padding-top: 7rem;">
+        <div class="section-entete">
+            <p class="label-or">Back office</p>
+            <h1 class="section-titre">Modifier <span class="accent">{{ prestation.nom }}</span></h1>
+        </div>
 
-    {{ include('admin/prestation/_form.html.twig') }}
+        {{ include('admin/prestation/_form.html.twig') }}
 
-    <a href="{{ path('admin_prestation_show', {id: prestation.id}) }}">Voir</a>
-    <a href="{{ path('admin_prestation_index') }}">Retour a la liste</a>
+        <div class="admin-actions">
+            <a href="{{ path('admin_prestation_show', {id: prestation.id}) }}" class="bouton bouton--contour">VOIR</a>
+            <a href="{{ path('admin_prestation_index') }}" class="bouton bouton--contour">RETOUR A LA LISTE</a>
+        </div>
 
-    <form method="post" action="{{ path('admin_prestation_delete', {id: prestation.id}) }}" onsubmit="return confirm('Supprimer cette prestation ?');">
-        <input type="hidden" name="_token" value="{{ csrf_token('delete-prestation-' ~ prestation.id) }}">
-        <button type="submit">Supprimer</button>
-    </form>
+        <form method="post" action="{{ path('admin_prestation_delete', {id: prestation.id}) }}" data-controller="confirmation" data-action="submit->confirmation#confirmer" data-confirmation-message-value="Supprimer cette prestation ?">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete-prestation-' ~ prestation.id) }}">
+            <button type="submit" class="bouton bouton--danger">SUPPRIMER</button>
+        </form>
+    </section>
 {% endblock %}

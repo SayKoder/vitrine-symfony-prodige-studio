@@ -1,9 +1,17 @@
-{% extends 'base.html.twig' %}
+{% extends 'public/base.html.twig' %}
 
-{% block title %}Mon compte{% endblock %}
+{% block title %}Mon compte - Prodige Studio{% endblock %}
 
-{% block body %}
-    <h1>Mon compte</h1>
-    <p>Connecte en tant que {{ user.email }}.</p>
-    <a href="{{ path('app_logout') }}">Se deconnecter</a>
+{% block contenu %}
+    <section class="section conteneur" style="padding-top: 7rem;">
+        <div class="panel">
+            <p class="label-or">Espace client</p>
+            <h1 class="section-titre">Mon <span class="accent">compte</span></h1>
+            <p class="section-note">Connecte en tant que {{ user.email }}.</p>
+
+            <div class="panel-liens">
+                <a href="{{ path('app_logout') }}" class="panel-lien panel-lien--sortie">Se deconnecter</a>
+            </div>
+        </div>
+    </section>
 {% endblock %}

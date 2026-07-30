@@ -1,19 +1,50 @@
-{{ form_start(form) }}
-    {{ form_row(form.nom) }}
-    {{ form_row(form.description) }}
-    {{ form_row(form.prix) }}
-    {{ form_row(form.dureeMinutes) }}
-    {{ form_row(form.actif) }}
-    {{ form_row(form.misEnAvant) }}
+{{ form_start(form, {attr: {class: 'form-grille'}}) }}
+    <div class="champ">
+        {{ form_label(form.nom) }}
+        {{ form_widget(form.nom) }}
+        {{ form_errors(form.nom) }}
+    </div>
+
+    <div class="champ">
+        {{ form_label(form.prix) }}
+        {{ form_widget(form.prix) }}
+        {{ form_errors(form.prix) }}
+    </div>
+
+    <div class="champ champ--pleine-largeur">
+        {{ form_label(form.description) }}
+        {{ form_widget(form.description) }}
+        {{ form_errors(form.description) }}
+    </div>
+
+    <div class="champ">
+        {{ form_label(form.dureeMinutes) }}
+        {{ form_widget(form.dureeMinutes) }}
+        {{ form_errors(form.dureeMinutes) }}
+    </div>
+
+    <div class="champ champ--case">
+        {{ form_widget(form.actif) }}
+        {{ form_label(form.actif) }}
+    </div>
+
+    <div class="champ champ--case">
+        {{ form_widget(form.misEnAvant) }}
+        {{ form_label(form.misEnAvant) }}
+    </div>
 
     {% if prestation is defined and prestation.image %}
-        <p>
-            Photo actuelle :
-            <br>
+        <div class="champ champ--pleine-largeur admin-image-actuelle">
+            <label>Photo actuelle</label>
             <img src="/uploads/prestations/{{ prestation.image }}" alt="{{ prestation.nom }}" width="200">
-        </p>
+        </div>
     {% endif %}
 
-    {{ form_row(form.imageFichier) }}
-    <button type="submit">Enregistrer</button>
+    <div class="champ champ--pleine-largeur">
+        {{ form_label(form.imageFichier) }}
+        {{ form_widget(form.imageFichier) }}
+        {{ form_errors(form.imageFichier) }}
+    </div>
+
+    <button type="submit" class="bouton bouton--plein">Enregistrer</button>
 {{ form_end(form) }}

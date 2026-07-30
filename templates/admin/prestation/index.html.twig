@@ -1,44 +1,48 @@
-{% extends 'base.html.twig' %}
+{% extends 'public/base.html.twig' %}
 
-{% block title %}Prestations{% endblock %}
+{% block title %}Prestations - Back office{% endblock %}
 
-{% block body %}
-    <h1>Prestations</h1>
+{% block contenu %}
+    <section class="section conteneur" style="padding-top: 7rem;">
+        <div class="section-entete">
+            <p class="label-or">Back office</p>
+            <h1 class="section-titre">Les <span class="accent">prestations</span></h1>
+        </div>
 
-    {% for message in app.flashes('success') %}
-        <div class="alert alert-success">{{ message }}</div>
-    {% endfor %}
-    {% for message in app.flashes('error') %}
-        <div class="alert alert-error">{{ message }}</div>
-    {% endfor %}
+        <div class="admin-actions">
+            <a href="{{ path('admin_prestation_new') }}" class="bouton bouton--plein">NOUVELLE PRESTATION</a>
+        </div>
 
-    <a href="{{ path('admin_prestation_new') }}">Nouvelle prestation</a>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Prix</th>
-                <th>Visible</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for prestation in prestations %}
-            <tr>
-                <td>{{ prestation.nom }}</td>
-                <td>{{ prestation.prix }} EUR</td>
-                <td>{{ prestation.actif ? 'oui' : 'non' }}</td>
-                <td>
-                    <a href="{{ path('admin_prestation_show', {id: prestation.id}) }}">Voir</a>
-                    <a href="{{ path('admin_prestation_edit', {id: prestation.id}) }}">Modifier</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">Aucune prestation pour le moment.</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <div class="tableau-conteneur">
+            <table class="tableau">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prix</th>
+                        <th>Visible</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for prestation in prestations %}
+                    <tr>
+                        <td>{{ prestation.nom }}</td>
+                        <td>{{ prestation.prix }} EUR</td>
+                        <td>
+                            <span class="badge {{ prestation.actif ? '' : 'badge--inactif' }}">{{ prestation.actif ? 'Oui' : 'Non' }}</span>
+                        </td>
+                        <td>
+                            <a href="{{ path('admin_prestation_show', {id: prestation.id}) }}">Voir</a>
+                            <a href="{{ path('admin_prestation_edit', {id: prestation.id}) }}">Modifier</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">Aucune prestation pour le moment.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
 {% endblock %}
