@@ -1,0 +1,24 @@
+{% extends 'public/base.html.twig' %}
+
+{% block title %}Modifier la photo - Back office{% endblock %}
+
+{% block contenu %}
+    <section class="section conteneur" style="padding-top: 7rem;">
+        <div class="section-entete">
+            <p class="label-or">Back office</p>
+            <h1 class="section-titre">Modifier la <span class="accent">photo</span></h1>
+        </div>
+
+        {{ include('admin/photo/_form.html.twig') }}
+
+        <div class="admin-actions">
+            <a href="{{ path('admin_photo_show', {id: photo.id}) }}" class="bouton bouton--contour">VOIR</a>
+            <a href="{{ path('admin_photo_index') }}" class="bouton bouton--contour">RETOUR A LA GALERIE</a>
+        </div>
+
+        <form method="post" action="{{ path('admin_photo_delete', {id: photo.id}) }}" data-controller="confirmation" data-action="submit->confirmation#confirmer" data-confirmation-message-value="Supprimer cette photo ?">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete-photo-' ~ photo.id) }}">
+            <button type="submit" class="bouton bouton--danger">SUPPRIMER</button>
+        </form>
+    </section>
+{% endblock %}

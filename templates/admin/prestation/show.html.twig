@@ -1,25 +1,42 @@
-{% extends 'base.html.twig' %}
+{% extends 'public/base.html.twig' %}
 
-{% block title %}{{ prestation.nom }}{% endblock %}
+{% block title %}{{ prestation.nom }} - Back office{% endblock %}
 
-{% block body %}
-    <h1>{{ prestation.nom }}</h1>
+{% block contenu %}
+    <section class="section conteneur" style="padding-top: 7rem;">
+        <div class="section-entete">
+            <p class="label-or">Back office</p>
+            <h1 class="section-titre">{{ prestation.nom }}</h1>
+        </div>
 
-    {% if prestation.image %}
-        <img src="/uploads/prestations/{{ prestation.image }}" alt="{{ prestation.nom }}" width="300">
-    {% endif %}
+        <div class="panel panel--large">
+            {% if prestation.image %}
+                <div class="admin-image-actuelle">
+                    <img src="/uploads/prestations/{{ prestation.image }}" alt="{{ prestation.nom }}" width="300">
+                </div>
+            {% endif %}
 
-    <p>{{ prestation.description }}</p>
-    <p>Prix : {{ prestation.prix }} EUR</p>
-    <p>Duree : {{ prestation.dureeMinutes ?: 'non renseignee' }}</p>
-    <p>Visible dans le catalogue : {{ prestation.actif ? 'oui' : 'non' }}</p>
-    <p>Mise en avant sur la vitrine : {{ prestation.misEnAvant ? 'oui' : 'non' }}</p>
+            <p class="section-note">{{ prestation.description }}</p>
+            <p class="section-note">Prix : {{ prestation.prix }} EUR</p>
+            <p class="section-note">Duree : {{ prestation.dureeMinutes ?: 'non renseignee' }}</p>
+            <p class="section-note">
+                Visible dans le catalogue :
+                <span class="badge {{ prestation.actif ? '' : 'badge--inactif' }}">{{ prestation.actif ? 'Oui' : 'Non' }}</span>
+            </p>
+            <p class="section-note">
+                Mise en avant sur la vitrine :
+                <span class="badge {{ prestation.misEnAvant ? '' : 'badge--inactif' }}">{{ prestation.misEnAvant ? 'Oui' : 'Non' }}</span>
+            </p>
 
-    <a href="{{ path('admin_prestation_edit', {id: prestation.id}) }}">Modifier</a>
-    <a href="{{ path('admin_prestation_index') }}">Retour a la liste</a>
+            <div class="admin-actions">
+                <a href="{{ path('admin_prestation_edit', {id: prestation.id}) }}" class="bouton bouton--plein">MODIFIER</a>
+                <a href="{{ path('admin_prestation_index') }}" class="bouton bouton--contour">RETOUR A LA LISTE</a>
+            </div>
 
-    <form method="post" action="{{ path('admin_prestation_delete', {id: prestation.id}) }}" onsubmit="return confirm('Supprimer cette prestation ?');">
-        <input type="hidden" name="_token" value="{{ csrf_token('delete-prestation-' ~ prestation.id) }}">
-        <button type="submit">Supprimer</button>
-    </form>
+            <form method="post" action="{{ path('admin_prestation_delete', {id: prestation.id}) }}" data-controller="confirmation" data-action="submit->confirmation#confirmer" data-confirmation-message-value="Supprimer cette prestation ?">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete-prestation-' ~ prestation.id) }}">
+                <button type="submit" class="bouton bouton--danger">SUPPRIMER</button>
+            </form>
+        </div>
+    </section>
 {% endblock %}

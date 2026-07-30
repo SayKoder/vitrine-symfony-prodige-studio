@@ -22,107 +22,33 @@
         </div>
 
         <div data-controller="galerie">
-            <div class="galerie-filtres">
-                <button type="button" class="galerie-filtre actif" data-categorie="tous" data-action="galerie#filtrer" data-galerie-target="filtre">TOUS</button>
-                <button type="button" class="galerie-filtre" data-categorie="portrait" data-action="galerie#filtrer" data-galerie-target="filtre">PORTRAIT</button>
-                <button type="button" class="galerie-filtre" data-categorie="mariage" data-action="galerie#filtrer" data-galerie-target="filtre">MARIAGE</button>
-                <button type="button" class="galerie-filtre" data-categorie="corporate" data-action="galerie#filtrer" data-galerie-target="filtre">CORPORATE</button>
-                <button type="button" class="galerie-filtre" data-categorie="nature" data-action="galerie#filtrer" data-galerie-target="filtre">NATURE</button>
-                <button type="button" class="galerie-filtre" data-categorie="evenement" data-action="galerie#filtrer" data-galerie-target="filtre">&Eacute;V&Eacute;NEMENT</button>
-            </div>
-
-            <div class="galerie-masonry">
-                <div class="cadre-coin galerie-carte galerie-carte--haute" data-categorie="portrait" data-galerie-target="carte">
-                    <div class="galerie-carte-visuel">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" />
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                        </svg>
-                        <span>PORTRAIT</span>
-                    </div>
+            {% if photos|length %}
+                <div class="galerie-filtres">
+                    <button type="button" class="galerie-filtre actif" data-categorie="tous" data-action="galerie#filtrer" data-galerie-target="filtre">TOUS</button>
+                    <button type="button" class="galerie-filtre" data-categorie="portrait" data-action="galerie#filtrer" data-galerie-target="filtre">PORTRAIT</button>
+                    <button type="button" class="galerie-filtre" data-categorie="mariage" data-action="galerie#filtrer" data-galerie-target="filtre">MARIAGE</button>
+                    <button type="button" class="galerie-filtre" data-categorie="corporate" data-action="galerie#filtrer" data-galerie-target="filtre">CORPORATE</button>
+                    <button type="button" class="galerie-filtre" data-categorie="nature" data-action="galerie#filtrer" data-galerie-target="filtre">NATURE</button>
+                    <button type="button" class="galerie-filtre" data-categorie="evenement" data-action="galerie#filtrer" data-galerie-target="filtre">&Eacute;V&Eacute;NEMENT</button>
                 </div>
 
-                <div class="cadre-coin galerie-carte galerie-carte--large" data-categorie="mariage" data-galerie-target="carte">
-                    <div class="galerie-carte-visuel">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                        </svg>
-                        <span>MARIAGE</span>
-                    </div>
+                <div class="galerie-masonry">
+                    {% for photo in photos %}
+                        <div class="cadre-coin galerie-carte" data-categorie="{{ photo.categorie.value }}" data-galerie-target="carte">
+                            <div class="galerie-carte-visuel">
+                                <img src="/uploads/photos/{{ photo.image }}" alt="{{ photo.legende ?: photo.categorie.libelle }}" loading="lazy">
+                            </div>
+                            {% if photo.legende %}
+                                <p class="galerie-carte-legende">{{ photo.legende }}</p>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
                 </div>
-
-                <div class="cadre-coin galerie-carte galerie-carte--carree" data-categorie="corporate" data-galerie-target="carte">
-                    <div class="galerie-carte-visuel">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-                            <rect x="2" y="7" width="20" height="14" rx="2" />
-                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-                        </svg>
-                        <span>CORPORATE</span>
-                    </div>
-                </div>
-
-                <div class="cadre-coin galerie-carte galerie-carte--haute" data-categorie="nature" data-galerie-target="carte">
-                    <div class="galerie-carte-visuel">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-                            <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" />
-                            <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
-                        </svg>
-                        <span>NATURE</span>
-                    </div>
-                </div>
-
-                <div class="cadre-coin galerie-carte galerie-carte--large" data-categorie="evenement" data-galerie-target="carte">
-                    <div class="galerie-carte-visuel">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-                            <path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8" />
-                        </svg>
-                        <span>&Eacute;V&Eacute;NEMENT</span>
-                    </div>
-                </div>
-
-                <div class="cadre-coin galerie-carte galerie-carte--carree" data-categorie="portrait" data-galerie-target="carte">
-                    <div class="galerie-carte-visuel">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" />
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                        </svg>
-                        <span>PORTRAIT</span>
-                    </div>
-                </div>
-
-                <div class="cadre-coin galerie-carte galerie-carte--haute" data-categorie="mariage" data-galerie-target="carte">
-                    <div class="galerie-carte-visuel">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                        </svg>
-                        <span>MARIAGE</span>
-                    </div>
-                </div>
-
-                <div class="cadre-coin galerie-carte galerie-carte--large" data-categorie="corporate" data-galerie-target="carte">
-                    <div class="galerie-carte-visuel">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-                            <rect x="2" y="7" width="20" height="14" rx="2" />
-                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-                        </svg>
-                        <span>CORPORATE</span>
-                    </div>
-                </div>
-
-                <div class="cadre-coin galerie-carte galerie-carte--carree" data-categorie="nature" data-galerie-target="carte">
-                    <div class="galerie-carte-visuel">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-                            <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" />
-                            <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
-                        </svg>
-                        <span>NATURE</span>
-                    </div>
-                </div>
-            </div>
-
-            <p class="section-note" style="margin-top: 2rem;">
-                Les photos de cette galerie seront mises en ligne prochainement.
-            </p>
+            {% else %}
+                <p class="section-note" style="margin-top: 2rem;">
+                    Les photos de cette galerie seront mises en ligne prochainement.
+                </p>
+            {% endif %}
         </div>
     </section>
 {% endblock %}

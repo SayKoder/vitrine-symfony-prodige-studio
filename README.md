@@ -49,7 +49,7 @@ docker compose exec php php bin/phpunit
 
 ```
 docker compose exec php php bin/console cache:warmup --env=dev
-docker compose exec php php vendor/bin/phpstan analyse
+docker compose exec php php vendor/bin/phpstan analyse --memory-limit=512M
 ```
 
 ## Integration continue
@@ -116,6 +116,7 @@ n'accede jamais directement aux entites d'un autre module.
 | `/panier`, `/tunnel` | Panier et tunnel de commande (ROLE_USER) |
 | `/compte` | Espace client (ROLE_USER) |
 | `/admin`, `/admin/prestations` | Back office, CRUD complet sur Prestation (ROLE_ADMIN) |
+| `/admin/photos` | Back office, CRUD complet sur les photos de la galerie et du hero de l'accueil (ROLE_ADMIN) |
 | `/login`, `/logout` | Authentification |
 | `/robots.txt`, `/sitemap.xml` | Genere dynamiquement a partir des routes reelles |
 

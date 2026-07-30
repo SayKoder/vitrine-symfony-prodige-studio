@@ -1,18 +1,18 @@
 {% extends 'public/base.html.twig' %}
 
-{% block title %}Nouvelle prestation - Back office{% endblock %}
+{% block title %}Nouvelle photo - Back office{% endblock %}
 
 {% block contenu %}
     <section class="section conteneur" style="padding-top: 7rem;">
         <div class="section-entete">
             <p class="label-or">Back office</p>
-            <h1 class="section-titre">Nouvelle <span class="accent">prestation</span></h1>
+            <h1 class="section-titre">Nouvelle <span class="accent">photo</span></h1>
         </div>
 
-        {{ include('admin/prestation/_form.html.twig') }}
+        {{ include('admin/photo/_form.html.twig') }}
 
         <p class="section-note" style="margin-top: 2rem;">
-            <a href="{{ path('admin_prestation_index') }}">&larr; Retour a la liste</a>
+            <a href="{{ path('admin_photo_index') }}">&larr; Retour a la galerie</a>
         </p>
     </section>
 {% endblock %}

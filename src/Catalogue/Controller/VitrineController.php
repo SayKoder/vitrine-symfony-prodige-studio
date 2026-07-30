@@ -4,25 +4,31 @@ namespace App\Catalogue\Controller;
 
 use App\Catalogue\Form\ContactMessage;
 use App\Catalogue\Form\ContactType;
+use App\Catalogue\Repository\PhotoRepository;
 use App\Catalogue\Service\ContactMailer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\RateLimiter\RateLimiterFactoryInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 class VitrineController extends AbstractController
 {
     #[Route('/', name: 'app_home', methods: ['GET'])]
-    public function accueil(): Response
+    public function accueil(PhotoRepository $photoRepository): Response
     {
-        return $this->render('public/home.html.twig');
+        return $this->render('public/home.html.twig', [
+            'photosMisesEnAvant' => $photoRepository->misesEnAvant(3),
+        ]);
     }
 
     #[Route('/galerie', name: 'app_galerie', methods: ['GET'])]
-    public function galerie(): Response
+    public function galerie(PhotoRepository $photoRepository): Response
     {
-        return $this->render('public/galerie.html.twig');
+        return $this->render('public/galerie.html.twig', [
+            'photos' => $photoRepository->pourGalerie(),
+        ]);
     }
 
     #[Route('/a-propos', name: 'app_a_propos', methods: ['GET'])]
@@ -32,13 +38,19 @@ class VitrineController extends AbstractController
     }
 
     #[Route('/contact', name: 'app_contact', methods: ['GET', 'POST'])]
-    public function contact(Request $request, ContactMailer $contactMailer): Response
+    public function contact(Request $request, ContactMailer $contactMailer, RateLimiterFactoryInterface $contactFormLimiter): Response
     {
         $contactMessage = new ContactMessage();
         $form = $this->createForm(ContactType::class, $contactMessage);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if (!$contactFormLimiter->create($request->getClientIp())->consume(1)->isAccepted()) {
+                $this->addFlash('error', 'Trop de messages envoyes recemment. Merci de reessayer dans quelques minutes.');
+
+                return $this->redirectToRoute('app_contact');
+            }
+
             if ('' === ($contactMessage->siteWeb ?? '')) {
                 try {
                     $contactMailer->envoyerMessage($contactMessage);
