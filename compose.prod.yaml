@@ -10,8 +10,7 @@ services:
   php:
     environment:
       APP_ENV: prod
-      # A remplacer par le nom de domaine reel une fois la bascule finale decidee
-      DEFAULT_URI: https://preview.prodige-studio.me
+      DEFAULT_URI: https://prodige-studio.me
       APP_SECRET: ${APP_SECRET}
       MAILER_DSN: ${MAILER_DSN}
       MAILER_EXPEDITEUR: ${MAILER_EXPEDITEUR}
@@ -39,9 +38,13 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=web"
-      - "traefik.http.routers.vitrineps.rule=Host(`preview.prodige-studio.me`)"
+      - "traefik.http.routers.vitrineps.rule=Host(`prodige-studio.me`) || Host(`www.prodige-studio.me`)"
       - "traefik.http.routers.vitrineps.entrypoints=websecure"
       - "traefik.http.routers.vitrineps.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.vitrineps.middlewares=vitrineps-wwwredirect"
+      - "traefik.http.middlewares.vitrineps-wwwredirect.redirectregex.regex=^https://www\\.prodige-studio\\.me/(.*)"
+      - "traefik.http.middlewares.vitrineps-wwwredirect.redirectregex.replacement=https://prodige-studio.me/$${1}"
+      - "traefik.http.middlewares.vitrineps-wwwredirect.redirectregex.permanent=true"
       - "traefik.http.services.vitrineps.loadbalancer.server.port=80"
     restart: unless-stopped
 
