@@ -45,7 +45,7 @@
             <div class="hero-visuels">
                 <div class="cadre-coin cadre-coin--visible hero-photo hero-photo-principale">
                     {% if photosMisesEnAvant[0] is defined %}
-                        <img src="/uploads/photos/{{ photosMisesEnAvant[0].image }}" alt="{{ photosMisesEnAvant[0].legende ?: photosMisesEnAvant[0].categorie.libelle }}">
+                        <img src="/uploads/photos/{{ photosMisesEnAvant[0].image }}" alt="{{ photosMisesEnAvant[0].legende ?: photosMisesEnAvant[0].categorie.libelle }}" style="object-position: {{ photosMisesEnAvant[0].pointFocalX }}% {{ photosMisesEnAvant[0].pointFocalY }}%">
                     {% else %}
                         <div class="hero-photo-placeholder">
                             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
@@ -60,7 +60,7 @@
                 <div class="hero-photo-secondaires">
                     <div class="cadre-coin hero-photo hero-photo-petite">
                         {% if photosMisesEnAvant[1] is defined %}
-                            <img src="/uploads/photos/{{ photosMisesEnAvant[1].image }}" alt="{{ photosMisesEnAvant[1].legende ?: photosMisesEnAvant[1].categorie.libelle }}">
+                            <img src="/uploads/photos/{{ photosMisesEnAvant[1].image }}" alt="{{ photosMisesEnAvant[1].legende ?: photosMisesEnAvant[1].categorie.libelle }}" style="object-position: {{ photosMisesEnAvant[1].pointFocalX }}% {{ photosMisesEnAvant[1].pointFocalY }}%">
                         {% else %}
                             <div class="hero-photo-placeholder">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
@@ -74,7 +74,7 @@
 
                     <div class="cadre-coin hero-photo hero-photo-petite" style="height: 8rem;">
                         {% if photosMisesEnAvant[2] is defined %}
-                            <img src="/uploads/photos/{{ photosMisesEnAvant[2].image }}" alt="{{ photosMisesEnAvant[2].legende ?: photosMisesEnAvant[2].categorie.libelle }}">
+                            <img src="/uploads/photos/{{ photosMisesEnAvant[2].image }}" alt="{{ photosMisesEnAvant[2].legende ?: photosMisesEnAvant[2].categorie.libelle }}" style="object-position: {{ photosMisesEnAvant[2].pointFocalX }}% {{ photosMisesEnAvant[2].pointFocalY }}%">
                         {% else %}
                             <div class="hero-photo-placeholder">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">

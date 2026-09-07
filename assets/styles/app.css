@@ -1667,3 +1667,101 @@ footer.pied-vitrine {
     border-color: rgb(200 90 80);
     background-color: rgb(200 90 80 / 0.08);
 }
+
+.tableau-vignette {
+    width: 84px;
+    height: 84px;
+    object-fit: cover;
+    display: block;
+    border-radius: 2px;
+    border: 1px solid rgb(var(--or) / 0.15);
+}
+
+.tableau tr.ligne--en-avant td {
+    box-shadow: inset 3px 0 0 rgb(var(--or));
+}
+
+.point-focal {
+    display: grid;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+@media (min-width: 720px) {
+    .point-focal {
+        grid-template-columns: minmax(0, 17rem) 1fr;
+        align-items: start;
+    }
+}
+
+.point-focal-scene {
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+    border: 1px solid rgb(var(--or) / 0.25);
+    cursor: crosshair;
+    touch-action: none;
+    line-height: 0;
+}
+
+.point-focal-scene img {
+    width: 100%;
+    height: auto;
+    display: block;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.point-focal-marqueur {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    margin: -11px 0 0 -11px;
+    border: 2px solid rgb(var(--or));
+    border-radius: 999px;
+    box-shadow: 0 0 0 2px rgb(0 0 0 / 0.55);
+    pointer-events: none;
+}
+
+.point-focal-apercus {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.point-focal-apercu {
+    margin: 0;
+    width: 84px;
+}
+
+.point-focal-apercu-cadre {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 2px;
+    border: 1px solid rgb(var(--or) / 0.2);
+    background-color: rgb(var(--noir-2));
+}
+
+.point-focal-apercu-cadre img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.point-focal-apercu figcaption {
+    margin-top: 0.35rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgb(var(--gris-chaud));
+    text-align: center;
+}
+
+.point-focal-aide {
+    grid-column: 1 / -1;
+    margin: 0;
+    font-size: 0.75rem;
+    color: rgb(var(--gris-chaud));
+}

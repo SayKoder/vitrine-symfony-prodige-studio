@@ -72,6 +72,8 @@ class PhotoControllerTest extends WebTestCase
         self::assertNotNull($photo);
         self::assertSame(CategoriePhoto::Mariage, $photo->getCategorie());
         self::assertNotNull($photo->getImage());
+        self::assertSame(50, $photo->getPointFocalX());
+        self::assertSame(50, $photo->getPointFocalY());
     }
 
     public function testEditPhoto(): void
@@ -87,6 +89,8 @@ class PhotoControllerTest extends WebTestCase
             'photo[categorie]' => CategoriePhoto::Nature->value,
             'photo[legende]' => 'Legende modifiee',
             'photo[misEnAvant]' => true,
+            'photo[pointFocalX]' => '25',
+            'photo[pointFocalY]' => '80',
         ]);
         $client->submit($form);
 
@@ -98,6 +102,8 @@ class PhotoControllerTest extends WebTestCase
         self::assertSame(CategoriePhoto::Nature, $photo->getCategorie());
         self::assertSame('Legende modifiee', $photo->getLegende());
         self::assertTrue($photo->isMisEnAvant());
+        self::assertSame(25, $photo->getPointFocalX());
+        self::assertSame(80, $photo->getPointFocalY());
     }
 
     public function testDeletePhoto(): void

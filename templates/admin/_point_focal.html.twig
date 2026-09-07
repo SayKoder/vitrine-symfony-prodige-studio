@@ -1,0 +1,41 @@
+<div class="champ champ--pleine-largeur">
+    <label>Cadrage de la photo</label>
+
+    {% if image_url %}
+        <div class="point-focal" data-controller="point-focal">
+            <div class="point-focal-scene"
+                 data-point-focal-target="scene"
+                 data-action="pointerdown->point-focal#pointer pointermove->point-focal#pointer pointerup->point-focal#relacher pointercancel->point-focal#relacher">
+                <img src="{{ image_url }}" alt="" draggable="false" data-point-focal-target="image">
+                <span class="point-focal-marqueur" data-point-focal-target="marqueur"></span>
+            </div>
+
+            <div class="point-focal-apercus">
+                {% for apercu in apercus %}
+                    <figure class="point-focal-apercu">
+                        <span class="point-focal-apercu-cadre" style="aspect-ratio: {{ apercu.ratio }};">
+                            <img src="{{ image_url }}" alt="" data-point-focal-target="apercu">
+                        </span>
+                        <figcaption>{{ apercu.label }}</figcaption>
+                    </figure>
+                {% endfor %}
+            </div>
+
+            <p class="point-focal-aide">
+                Cliquez sur la photo a l'endroit a garder au centre du cadrage (le visage en general).
+                Les vignettes montrent le rendu reel dans chaque zone du site.
+            </p>
+
+            <div hidden>
+                {{ form_widget(form.pointFocalX, {attr: {'data-point-focal-target': 'champX'}}) }}
+                {{ form_widget(form.pointFocalY, {attr: {'data-point-focal-target': 'champY'}}) }}
+            </div>
+        </div>
+    {% else %}
+        <p class="section-note">Enregistrez d'abord la photo, vous pourrez ensuite regler son point focal.</p>
+        <div hidden>
+            {{ form_widget(form.pointFocalX) }}
+            {{ form_widget(form.pointFocalY) }}
+        </div>
+    {% endif %}
+</div>

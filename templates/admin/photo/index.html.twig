@@ -13,6 +13,11 @@
             <a href="{{ path('admin_photo_new') }}" class="bouton bouton--plein">AJOUTER UNE PHOTO</a>
         </div>
 
+        <p class="section-note">
+            Les photos mises en avant (&#9733;) alimentent le hero de la page d'accueil (1 grande + 2 petites).
+            L'apercu ci-dessous reflete le point focal enregistre pour chaque photo.
+        </p>
+
         <div class="tableau-conteneur">
             <table class="tableau">
                 <thead>
@@ -26,10 +31,10 @@
                 </thead>
                 <tbody>
                 {% for photo in photos %}
-                    <tr>
+                    <tr class="{{ photo.misEnAvant ? 'ligne--en-avant' }}">
                         <td>
                             {% if photo.image %}
-                                <img src="/uploads/photos/{{ photo.image }}" alt="{{ photo.legende ?: photo.categorie.libelle }}" width="60">
+                                <img class="tableau-vignette" src="/uploads/photos/{{ photo.image }}" alt="{{ photo.legende ?: photo.categorie.libelle }}" style="object-position: {{ photo.pointFocalX }}% {{ photo.pointFocalY }}%">
                             {% else %}
                                 -
                             {% endif %}
@@ -37,7 +42,7 @@
                         <td>{{ photo.categorie.libelle }}</td>
                         <td>{{ photo.legende ?: '-' }}</td>
                         <td>
-                            <span class="badge {{ photo.misEnAvant ? '' : 'badge--inactif' }}">{{ photo.misEnAvant ? 'Oui' : 'Non' }}</span>
+                            <span class="badge {{ photo.misEnAvant ? '' : 'badge--inactif' }}">{{ photo.misEnAvant ? '★ En avant' : 'Non' }}</span>
                         </td>
                         <td>
                             <a href="{{ path('admin_photo_show', {id: photo.id}) }}">Voir</a>

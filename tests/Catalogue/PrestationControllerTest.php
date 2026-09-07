@@ -80,12 +80,19 @@ class PrestationControllerTest extends WebTestCase
             'prestation[nom]' => 'Seance renommee',
             'prestation[description]' => 'Description test',
             'prestation[prix]' => '120.00',
+            'prestation[pointFocalX]' => '40',
+            'prestation[pointFocalY]' => '15',
         ]);
         $client->submit($form);
 
         self::assertResponseRedirects('/admin/prestations');
         $client->followRedirect();
         self::assertSelectorTextContains('body', 'Seance renommee');
+
+        $entityManager->clear();
+        $prestation = $entityManager->getRepository(Prestation::class)->find($prestation->getId());
+        self::assertSame(40, $prestation->getPointFocalX());
+        self::assertSame(15, $prestation->getPointFocalY());
     }
 
     public function testDeletePrestationWithoutOrders(): void
@@ -180,5 +187,40 @@ class PrestationControllerTest extends WebTestCase
         self::assertFileExists($dossierUploads.'/'.$secondeImage);
 
         $filesystem->remove($dossierUploads.'/'.$secondeImage);
+    }
+
+    public function testCatalogueImageCarriesFocalPoint(): void
+    {
+        $client = static::createClient();
+        $client->loginUser($this->createAdmin());
+
+        $entityManager = static::getContainer()->get(EntityManagerInterface::class);
+        $dossierUploads = static::getContainer()->getParameter('kernel.project_dir').'/public/uploads/prestations';
+        $filesystem = new Filesystem();
+        $prestation = $this->createPrestation($entityManager);
+        $nom = uniqid('cadrage-', true);
+
+        $crawler = $client->request('GET', '/admin/prestations/'.$prestation->getId().'/edit');
+        $form = $crawler->selectButton('Enregistrer')->form([
+            'prestation[nom]' => $nom,
+            'prestation[description]' => 'Description test',
+            'prestation[prix]' => '120.00',
+            'prestation[pointFocalX]' => '20',
+            'prestation[pointFocalY]' => '75',
+        ]);
+        /** @var \Symfony\Component\DomCrawler\Field\FileFormField $champImage */
+        $champImage = $form['prestation[imageFichier]'];
+        $champImage->upload($this->creerFichierImageTemporaire());
+        $client->submit($form);
+
+        $entityManager->clear();
+        $prestation = $entityManager->getRepository(Prestation::class)->find($prestation->getId());
+        self::assertSame(20, $prestation->getPointFocalX());
+        self::assertSame(75, $prestation->getPointFocalY());
+
+        $client->request('GET', '/prestations', ['nom' => $nom]);
+        self::assertSelectorExists('.carte-forfait-image img[style*="object-position: 20% 75%"]');
+
+        $filesystem->remove($dossierUploads.'/'.$prestation->getImage());
     }
 }

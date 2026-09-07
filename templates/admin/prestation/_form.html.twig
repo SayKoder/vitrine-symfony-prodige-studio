@@ -33,12 +33,13 @@
         {{ form_label(form.misEnAvant) }}
     </div>
 
-    {% if prestation is defined and prestation.image %}
-        <div class="champ champ--pleine-largeur admin-image-actuelle">
-            <label>Photo actuelle</label>
-            <img src="/uploads/prestations/{{ prestation.image }}" alt="{{ prestation.nom }}" width="200">
-        </div>
-    {% endif %}
+    {{ include('admin/_point_focal.html.twig', {
+        form: form,
+        image_url: (prestation is defined and prestation.image) ? '/uploads/prestations/' ~ prestation.image : null,
+        apercus: [
+            {label: 'Carte forfait', ratio: '4 / 3'},
+        ],
+    }) }}
 
     <div class="champ champ--pleine-largeur">
         {{ form_label(form.imageFichier) }}

@@ -36,7 +36,7 @@
                     {% for photo in photos %}
                         <div class="cadre-coin galerie-carte" data-categorie="{{ photo.categorie.value }}" data-galerie-target="carte">
                             <div class="galerie-carte-visuel">
-                                <img src="/uploads/photos/{{ photo.image }}" alt="{{ photo.legende ?: photo.categorie.libelle }}" loading="lazy">
+                                <img src="/uploads/photos/{{ photo.image }}" alt="{{ photo.legende ?: photo.categorie.libelle }}" loading="lazy" style="object-position: {{ photo.pointFocalX }}% {{ photo.pointFocalY }}%">
                             </div>
                             {% if photo.legende %}
                                 <p class="galerie-carte-legende">{{ photo.legende }}</p>

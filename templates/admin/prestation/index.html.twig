@@ -13,10 +13,15 @@
             <a href="{{ path('admin_prestation_new') }}" class="bouton bouton--plein">NOUVELLE PRESTATION</a>
         </div>
 
+        <p class="section-note">
+            L'apercu reflete le point focal enregistre pour chaque forfait, tel qu'il apparaitra sur la carte du catalogue.
+        </p>
+
         <div class="tableau-conteneur">
             <table class="tableau">
                 <thead>
                     <tr>
+                        <th>Apercu</th>
                         <th>Nom</th>
                         <th>Prix</th>
                         <th>Visible</th>
@@ -26,6 +31,13 @@
                 <tbody>
                 {% for prestation in prestations %}
                     <tr>
+                        <td>
+                            {% if prestation.image %}
+                                <img class="tableau-vignette" src="/uploads/prestations/{{ prestation.image }}" alt="{{ prestation.nom }}" style="object-position: {{ prestation.pointFocalX }}% {{ prestation.pointFocalY }}%">
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
                         <td>{{ prestation.nom }}</td>
                         <td>{{ prestation.prix }} EUR</td>
                         <td>
@@ -38,7 +50,7 @@
                     </tr>
                 {% else %}
                     <tr>
-                        <td colspan="4">Aucune prestation pour le moment.</td>
+                        <td colspan="5">Aucune prestation pour le moment.</td>
                     </tr>
                 {% endfor %}
                 </tbody>

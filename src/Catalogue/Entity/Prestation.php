@@ -62,6 +62,14 @@ class Prestation
     #[Groups(['prestation:read'])]
     private bool $misEnAvant = false;
 
+    #[ORM\Column(type: 'smallint', options: ['default' => 50])]
+    #[Groups(['prestation:read'])]
+    private int $pointFocalX = 50;
+
+    #[ORM\Column(type: 'smallint', options: ['default' => 50])]
+    #[Groups(['prestation:read'])]
+    private int $pointFocalY = 50;
+
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['prestation:read'])]
     private ?string $image = null;
@@ -163,6 +171,30 @@ class Prestation
     public function setImage(?string $image): static
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getPointFocalX(): int
+    {
+        return $this->pointFocalX;
+    }
+
+    public function setPointFocalX(?int $pointFocalX): static
+    {
+        $this->pointFocalX = null === $pointFocalX ? 50 : max(0, min(100, $pointFocalX));
+
+        return $this;
+    }
+
+    public function getPointFocalY(): int
+    {
+        return $this->pointFocalY;
+    }
+
+    public function setPointFocalY(?int $pointFocalY): static
+    {
+        $this->pointFocalY = null === $pointFocalY ? 50 : max(0, min(100, $pointFocalY));
 
         return $this;
     }

@@ -46,7 +46,7 @@
 
                         {% if prestation.image %}
                             <div class="carte-forfait-image">
-                                <img src="/uploads/prestations/{{ prestation.image }}" alt="{{ prestation.nom }}">
+                                <img src="/uploads/prestations/{{ prestation.image }}" alt="{{ prestation.nom }}" style="object-position: {{ prestation.pointFocalX }}% {{ prestation.pointFocalY }}%">
                             </div>
                         {% endif %}
 

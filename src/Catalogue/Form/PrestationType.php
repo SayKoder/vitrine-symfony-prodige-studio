@@ -44,6 +44,14 @@ class PrestationType extends AbstractType
                 'label' => 'Mettre en avant sur la vitrine',
                 'required' => false,
             ])
+            ->add('pointFocalX', IntegerType::class, [
+                'label' => false,
+                'required' => false,
+            ])
+            ->add('pointFocalY', IntegerType::class, [
+                'label' => false,
+                'required' => false,
+            ])
             ->add('imageFichier', FileType::class, [
                 'label' => 'Photo (remplace la photo actuelle si renseignee)',
                 'mapped' => false,

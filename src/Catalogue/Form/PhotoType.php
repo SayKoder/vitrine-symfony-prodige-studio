@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -32,6 +33,14 @@ class PhotoType extends AbstractType
             ])
             ->add('misEnAvant', CheckboxType::class, [
                 'label' => 'Mettre en avant sur la page d\'accueil',
+                'required' => false,
+            ])
+            ->add('pointFocalX', IntegerType::class, [
+                'label' => false,
+                'required' => false,
+            ])
+            ->add('pointFocalY', IntegerType::class, [
+                'label' => false,
                 'required' => false,
             ])
             ->add('imageFichier', FileType::class, [

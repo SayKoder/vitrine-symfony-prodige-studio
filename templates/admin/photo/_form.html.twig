@@ -16,12 +16,17 @@
         {{ form_label(form.misEnAvant) }}
     </div>
 
-    {% if photo is defined and photo.image %}
-        <div class="champ champ--pleine-largeur admin-image-actuelle">
-            <label>Photo actuelle</label>
-            <img src="/uploads/photos/{{ photo.image }}" alt="{{ photo.legende ?: photo.categorie.libelle }}" width="200">
-        </div>
-    {% endif %}
+    {{ include('admin/_point_focal.html.twig', {
+        form: form,
+        image_url: (photo is defined and photo.image) ? '/uploads/photos/' ~ photo.image : null,
+        apercus: [
+            {label: 'Hero grand', ratio: '7 / 9'},
+            {label: 'Hero petit', ratio: '10 / 11'},
+            {label: 'Galerie', ratio: '1 / 1'},
+            {label: 'Galerie haute', ratio: '3 / 4'},
+            {label: 'Galerie large', ratio: '4 / 3'},
+        ],
+    }) }}
 
     <div class="champ champ--pleine-largeur">
         {{ form_label(form.imageFichier) }}

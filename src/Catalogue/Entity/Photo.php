@@ -25,6 +25,12 @@ class Photo
     #[ORM\Column]
     private bool $misEnAvant = false;
 
+    #[ORM\Column(type: 'smallint', options: ['default' => 50])]
+    private int $pointFocalX = 50;
+
+    #[ORM\Column(type: 'smallint', options: ['default' => 50])]
+    private int $pointFocalY = 50;
+
     #[ORM\Column]
     private \DateTimeImmutable $createdAt;
 
@@ -83,6 +89,30 @@ class Photo
     public function setMisEnAvant(bool $misEnAvant): static
     {
         $this->misEnAvant = $misEnAvant;
+
+        return $this;
+    }
+
+    public function getPointFocalX(): int
+    {
+        return $this->pointFocalX;
+    }
+
+    public function setPointFocalX(?int $pointFocalX): static
+    {
+        $this->pointFocalX = null === $pointFocalX ? 50 : max(0, min(100, $pointFocalX));
+
+        return $this;
+    }
+
+    public function getPointFocalY(): int
+    {
+        return $this->pointFocalY;
+    }
+
+    public function setPointFocalY(?int $pointFocalY): static
+    {
+        $this->pointFocalY = null === $pointFocalY ? 50 : max(0, min(100, $pointFocalY));
 
         return $this;
     }
